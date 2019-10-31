@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - AjudeApplication",
+            "request": "launch",
+            "mainClass": "backend.ajude.AjudeApplication",
+            "projectName": "ajude"
+        }
+    ]
+}
