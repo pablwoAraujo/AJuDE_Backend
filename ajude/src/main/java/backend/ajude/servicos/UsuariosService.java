@@ -24,7 +24,7 @@ public class UsuariosService {
 
 	public Usuario adicionaUsuario(Usuario usuario) throws ServletException {
         Optional<Usuario> provisory = usuariosDAO.findByEmail(usuario.getEmail());
-		if(provisory.isPresent()) {
+	    if(provisory.isPresent()) {
             throw new ServletException("Usuario ja cadastrado");
         }
         this.envioEmail.sendNotification(usuario);
