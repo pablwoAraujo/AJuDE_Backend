@@ -8,7 +8,6 @@ import backend.ajude.entidades.Campanha;
 import backend.ajude.repositories.CampanhasRepository;
 
 import org.springframework.stereotype.Service;
-import backend.ajude.entidades.Campanha;
 
 @Service
 public class CampanhasService {
