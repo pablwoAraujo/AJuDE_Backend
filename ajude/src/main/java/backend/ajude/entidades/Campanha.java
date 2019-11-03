@@ -25,7 +25,22 @@ public class Campanha {
     }
 
     public Campanha(long id, String nome, String URL, String descricao, String data, String status, double meta, double doacao, Usuario dono, String comentarios, int likes) {
+        super();
         this.id = id;
+        this.nome = nome;
+        this.URL = URL;
+        this.descricao = descricao;
+        this.data = data;
+        this.status = status;
+        this.meta = meta;
+        this.doacao = doacao;
+        this.dono = dono;
+        this.comentarios = comentarios;
+        this.likes = likes;
+    }
+
+    public Campanha(String nome, String URL, String descricao, String data, String status, double meta, double doacao, Usuario dono, String comentarios, int likes) {
+        super();
         this.nome = nome;
         this.URL = URL;
         this.descricao = descricao;

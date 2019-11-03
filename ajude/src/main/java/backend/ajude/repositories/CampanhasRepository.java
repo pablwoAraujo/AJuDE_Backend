@@ -9,8 +9,5 @@ import org.springframework.stereotype.Repository;
 import backend.ajude.entidades.Campanha;
 
 @Repository
-public interface CampanhasRepository<T, ID extends Serializable> extends JpaRepository<Campanha, String> {
-
-    //@Query()
-    Optional<Campanha> findByNome(String nome);
+public interface CampanhasRepository<T, ID extends Serializable> extends JpaRepository<Campanha, Long> {
 }
