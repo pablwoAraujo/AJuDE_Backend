@@ -5,15 +5,17 @@ import java.util.Optional;
 import javax.servlet.ServletException;
 
 import backend.ajude.entidades.Campanha;
+import backend.ajude.repositories.CampanhasRepository;
+
 import org.springframework.stereotype.Service;
-
 import backend.ajude.entidades.Campanha;
-import backend.ajude.repositories.UsuariosRepository;
 
+@Service
 public class CampanhasService {
-    private UsuariosRepository<Campanha, Long> campanhasDAO;
+    
+    private CampanhasRepository<Campanha, Long> campanhasDAO;
 
-    public CampanhasService(UsuariosRepository<Campanha, Long> campanhasDAO){
+    public CampanhasService(CampanhasRepository<Campanha, Long> campanhasDAO){
         super();
         this.campanhasDAO = campanhasDAO;
     }
@@ -26,7 +28,7 @@ public class CampanhasService {
         return campanhasDAO.save(campanha);
     }
 
-    public
-
-
+    public Optional<Campanha> getCampanha(long id) {
+		return this.campanhasDAO.findById(id);
+	}
 }
