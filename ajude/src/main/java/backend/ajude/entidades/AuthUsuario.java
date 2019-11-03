@@ -1,12 +1,7 @@
 package backend.ajude.entidades;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Entity
 public class AuthUsuario{
 
-    @Id
     private String email;
     private String senha;
 
