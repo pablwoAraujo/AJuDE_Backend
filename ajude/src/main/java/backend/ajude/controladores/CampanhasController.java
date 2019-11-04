@@ -6,9 +6,13 @@ import backend.ajude.servicos.CampanhasService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 
@@ -27,5 +31,15 @@ public class CampanhasController {
     public ResponseEntity<Campanha> adicionaCampanha(@RequestBody Campanha campanha) throws ServletException {
         return new ResponseEntity<Campanha>(this.campanhasService.adicionaCampanha(campanha), HttpStatus.OK);
     }
+
+    @GetMapping("api/campanhas/{id}")
+    public ResponseEntity<Campanha> visualizaCampanha(@PathVariable Long id){
+        Optional<Campanha> campanha = campanhasService.getCampanha(id);
+        if(campanha.isPresent()){
+            return new ResponseEntity<Campanha>(campanha.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
+    }
+
 }
 
