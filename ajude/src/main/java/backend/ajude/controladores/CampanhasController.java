@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
@@ -18,6 +19,7 @@ import java.util.Optional;
 import javax.servlet.ServletException;
 
 @CrossOrigin
+@RequestMapping("/api/campanhas")
 @RestController
 public class CampanhasController {
 
@@ -28,12 +30,12 @@ public class CampanhasController {
         this.campanhasService = campanhasService;
     }
 
-    @PostMapping("/api/campanhas")
+    @PostMapping
     public ResponseEntity<Campanha> adicionaCampanha(@RequestBody CreateCampanha campanha) throws ServletException {
         return new ResponseEntity<Campanha>(this.campanhasService.adicionaCampanha(campanha), HttpStatus.OK);
     }
 
-    @GetMapping("api/campanhas/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Campanha> visualizaCampanha(@PathVariable Long id){
         Optional<Campanha> campanha = campanhasService.getCampanha(id);
         if(campanha.isPresent()){

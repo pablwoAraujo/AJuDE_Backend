@@ -29,7 +29,7 @@ public class CampanhasService {
     }
 
     public Campanha criaCampanha(CreateCampanha campanha) throws ServletException{
-        Campanha salvar = new Campanha(campanha.getNome(),"a",campanha.getDescricao(),"","",campanha.getMeta(),1.2,"",1);
+        Campanha salvar = new Campanha(campanha.getNome(),"a",campanha.getDescricao(),"","",campanha.getMeta(),1.2,null,"",1);
         return campanhasDAO.save(salvar);
     }
 
