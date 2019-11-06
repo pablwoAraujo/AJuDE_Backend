@@ -10,5 +10,5 @@ import backend.ajude.entidades.Campanha;
 
 @Repository
 public interface CampanhasRepository<T, ID extends Serializable> extends JpaRepository<Campanha, Long> {
-	Optional<Campanha> findById(Long id);
+	Optional<Campanha> findByNome(String string);
 }

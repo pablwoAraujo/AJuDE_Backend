@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.servlet.ServletException;
 
 import backend.ajude.entidades.Campanha;
+import backend.ajude.entidades.CreateCampanha;
 import backend.ajude.repositories.CampanhasRepository;
 
 import org.springframework.stereotype.Service;
@@ -19,13 +20,19 @@ public class CampanhasService {
         this.campanhasDAO = campanhasDAO;
     }
 
-    public Campanha adicionaCampanha(Campanha campanha) throws ServletException {
-        Optional<Campanha> provisory = campanhasDAO.findById(campanha.getId());
+    public Campanha adicionaCampanha(CreateCampanha campanha) throws ServletException {
+        Optional<Campanha> provisory = campanhasDAO.findByNome(campanha.getNome());
         if(provisory.isPresent()) {
             throw new ServletException("Campanha já Cadastrada");
         }
-        return campanhasDAO.save(campanha);
+        return criaCampanha(campanha);
     }
+
+    public Campanha criaCampanha(CreateCampanha campanha) throws ServletException{
+        Campanha salvar = new Campanha(campanha.getNome(),"a",campanha.getDescricao(),"","",campanha.getMeta(),1.2,"",1);
+        return campanhasDAO.save(salvar);
+    }
+
 
     public Optional<Campanha> getCampanha(long id) {
 		return this.campanhasDAO.findById(id);

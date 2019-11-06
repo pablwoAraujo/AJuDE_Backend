@@ -1,6 +1,7 @@
 package backend.ajude.controladores;
 
 import backend.ajude.entidades.Campanha;
+import backend.ajude.entidades.CreateCampanha;
 import backend.ajude.servicos.CampanhasService;
 
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class CampanhasController {
     }
 
     @PostMapping("/api/campanhas")
-    public ResponseEntity<Campanha> adicionaCampanha(@RequestBody Campanha campanha) throws ServletException {
+    public ResponseEntity<Campanha> adicionaCampanha(@RequestBody CreateCampanha campanha) throws ServletException {
         return new ResponseEntity<Campanha>(this.campanhasService.adicionaCampanha(campanha), HttpStatus.OK);
     }
 
