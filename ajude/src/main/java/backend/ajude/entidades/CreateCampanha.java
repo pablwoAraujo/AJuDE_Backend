@@ -1,17 +1,23 @@
 package backend.ajude.entidades;
 
+import java.util.Date;
+
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 public class CreateCampanha{
     private String nome;
     private String descricao;
     private double meta;
-    private String data;
+    @Temporal(TemporalType.DATE)
+    private Date data;
     private String url;
 
     public CreateCampanha() {
         super();
     }
 
-    public CreateCampanha(String nome, String descricao, double meta, String data, String url){
+    public CreateCampanha(String nome, String descricao, double meta, Date data, String url){
         super();
         this.nome = nome;
         this.descricao = descricao;
@@ -44,11 +50,11 @@ public class CreateCampanha{
         this.meta = meta;
     }
 
-    public String getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
     }
 

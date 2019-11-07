@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import javax.servlet.ServletException;
 
+import backend.ajude.Enum.StatusCampanha;
 import backend.ajude.entidades.Campanha;
 import backend.ajude.entidades.CreateCampanha;
 import backend.ajude.repositories.CampanhasRepository;
@@ -29,7 +30,7 @@ public class CampanhasService {
     }
 
     public Campanha criaCampanha(CreateCampanha campanha) throws ServletException{
-        Campanha salvar = new Campanha(campanha.getNome(),campanha.getUrl(),campanha.getDescricao(),campanha.getData(),"a",campanha.getMeta(),1.2,null,"",1);
+        Campanha salvar = new Campanha(campanha.getNome(),campanha.getUrl(),campanha.getDescricao(),campanha.getData(),StatusCampanha.ATIVA,campanha.getMeta(),1.2,null,"",1);
         return campanhasDAO.save(salvar);
     }
 

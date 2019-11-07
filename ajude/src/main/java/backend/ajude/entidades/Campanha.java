@@ -1,9 +1,15 @@
 package backend.ajude.entidades;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import backend.ajude.Enum.StatusCampanha;
 
 @Entity
 public class Campanha {
@@ -13,8 +19,9 @@ public class Campanha {
     private String nome;
     private String url;
     private String descricao;
-    private String data;
-    private String status;
+    @Temporal(TemporalType.DATE)
+    private Date data;
+    private StatusCampanha status;
     private double meta;
     private double doacao;
     @ManyToOne
@@ -26,7 +33,8 @@ public class Campanha {
         super();
     }
 
-    public Campanha(long id, String nome, String url, String descricao, String data, String status, double meta, double doacao, Usuario dono, String comentarios, int likes) {
+    public Campanha(long id, String nome, String url, String descricao, Date data, StatusCampanha status, double meta,
+            double doacao, Usuario dono, String comentarios, int likes) {
         super();
         this.id = id;
         this.nome = nome;
@@ -41,7 +49,8 @@ public class Campanha {
         this.likes = likes;
     }
 
-    public Campanha(String nome, String url, String descricao, String data, String status, double meta, double doacao, Usuario dono,String comentarios, int likes) {
+    public Campanha(String nome, String url, String descricao, Date data, StatusCampanha status, double meta,
+            double doacao, Usuario dono, String comentarios, int likes) {
         super();
         this.nome = nome;
         this.url = url;
@@ -87,19 +96,19 @@ public class Campanha {
         this.nome = nome;
     }
 
-    public String getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
     }
 
-    public String getStatus() {
+    public StatusCampanha getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusCampanha status) {
         this.status = status;
     }
 
