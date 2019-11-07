@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
@@ -42,6 +43,18 @@ public class CampanhasController {
         }
         return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("pesquisar/{nome}")
+    public ResponseEntity<List<Campanha>> pesquisaPorNome(@PathVariable String nome){
+        List<Campanha> campanha = campanhasService.pesquisaPorNome(nome);
+        if(!campanha.isEmpty()){
+            return new ResponseEntity<List<Campanha>>(campanha, HttpStatus.OK);
+        }
+        return new ResponseEntity<List<Campanha>>(HttpStatus.NOT_FOUND);
+
+    }
+
+
 
 }
 

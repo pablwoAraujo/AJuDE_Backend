@@ -1,5 +1,7 @@
 package backend.ajude.servicos;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
@@ -37,5 +39,16 @@ public class CampanhasService {
 
     public Optional<Campanha> getCampanha(long id) {
 		return this.campanhasDAO.findById(id);
-	}
+    }
+    
+    public List<Campanha> pesquisaPorNome(String nome){
+        List<Campanha> campanhas = campanhasDAO.findAll();
+        List<Campanha> saida = new ArrayList<Campanha>();
+        for (int i=0; i < campanhas.size(); i++){
+            if(campanhas.get(i).getNome().toLowerCase().contains(nome.toLowerCase())){
+                saida.add(campanhas.get(i));
+            }
+        }
+        return saida;
+    }
 }
