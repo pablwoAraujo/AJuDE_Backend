@@ -4,16 +4,20 @@ public class CreateCampanha{
     private String nome;
     private String descricao;
     private double meta;
+    private String data;
+    private String url;
 
     public CreateCampanha() {
         super();
     }
 
-    public CreateCampanha(String nome, String descricao, double meta){
+    public CreateCampanha(String nome, String descricao, double meta, String data, String url){
         super();
         this.nome = nome;
         this.descricao = descricao;
         this.meta = meta;
+        this.data = data;
+        this.url = url;
     }
 
     public String getNome() {
@@ -38,6 +42,22 @@ public class CreateCampanha{
 
     public void setMeta(double meta) {
         this.meta = meta;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
 }

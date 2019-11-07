@@ -11,7 +11,7 @@ public class Campanha {
     @GeneratedValue
     private long id;
     private String nome;
-    private String URL;
+    private String url;
     private String descricao;
     private String data;
     private String status;
@@ -26,11 +26,11 @@ public class Campanha {
         super();
     }
 
-    public Campanha(long id, String nome, String URL, String descricao, String data, String status, double meta, double doacao, Usuario dono, String comentarios, int likes) {
+    public Campanha(long id, String nome, String url, String descricao, String data, String status, double meta, double doacao, Usuario dono, String comentarios, int likes) {
         super();
         this.id = id;
         this.nome = nome;
-        this.URL = URL;
+        this.url = url;
         this.descricao = descricao;
         this.data = data;
         this.status = status;
@@ -41,10 +41,10 @@ public class Campanha {
         this.likes = likes;
     }
 
-    public Campanha(String nome, String URL, String descricao, String data, String status, double meta, double doacao, Usuario dono,String comentarios, int likes) {
+    public Campanha(String nome, String url, String descricao, String data, String status, double meta, double doacao, Usuario dono,String comentarios, int likes) {
         super();
         this.nome = nome;
-        this.URL = URL;
+        this.url = url;
         this.descricao = descricao;
         this.data = data;
         this.status = status;
@@ -63,12 +63,12 @@ public class Campanha {
         this.id = id;
     }
 
-    public String getURL() {
-        return URL;
+    public String geturl() {
+        return url;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
+    public void seturl(String url) {
+        this.url = url;
     }
 
     public String getDescricao() {
