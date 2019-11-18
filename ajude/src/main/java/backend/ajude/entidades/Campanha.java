@@ -1,6 +1,8 @@
 package backend.ajude.entidades;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +26,8 @@ public class Campanha {
     private StatusCampanha status;
     private double meta;
     private double doacao;
+    private Set<Comentario> hashcomentarios;
+
     @ManyToOne
     private Usuario dono;
     private String comentarios;
@@ -47,6 +51,7 @@ public class Campanha {
         this.dono = dono;
         this.comentarios = comentarios;
         this.likes = likes;
+        this.hashcomentarios = new HashSet<>();
     }
 
     public Campanha(String nome, String url, String descricao, Date data, StatusCampanha status, double meta,
@@ -62,6 +67,13 @@ public class Campanha {
         this.dono = dono;
         this.comentarios = comentarios;
         this.likes = likes;
+        this.hashcomentarios = new HashSet<>();
+
+    }
+    /** aaaaaaaaaaaaaaaaquii **/
+    public void adcionaComentario(String comentario, String email){
+        Comentario iniciar = new Comentario(comentario, email);
+        hashcomentarios.add(iniciar);
     }
 
     public long getId() {

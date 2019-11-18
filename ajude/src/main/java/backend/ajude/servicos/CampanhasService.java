@@ -37,6 +37,12 @@ public class CampanhasService {
     }
 
 
+    /**public Campanha adcionaComentario(long id, String comentario, String email) {
+        Campanha right = this.campanhasDAO.findById(id);
+        right.adcionaComentario(String comentario, String email);
+        return campanhasDAO.save(right);
+    }**/
+
     public Optional<Campanha> getCampanha(long id) {
 		return this.campanhasDAO.findById(id);
     }
