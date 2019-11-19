@@ -3,6 +3,9 @@ package backend.ajude.entidades;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Comentario {
@@ -11,7 +14,8 @@ public class Comentario {
     private long id;
     private String comentario;
     private String email;
-    //private HashSet<Comentario> hashcomentarios;
+    @JoinColumn(name="Respostas")
+    private Set<Comentario> hashrespostas;
 
     public Comentario(){
         super();
@@ -21,20 +25,20 @@ public class Comentario {
         this.id = id;
         this.comentario = comentario;
         this.email = email;
-        //this.hashcomentarios = new HashSet<>();
+        this.hashrespostas = new HashSet<>();
     }
 
     public Comentario(String comentario, String email){
         super();
         this.comentario = comentario;
         this.email = email;
-        //this.hashcomentarios = new HashSet<>();
+        this.hashrespostas = new HashSet<>();
     }
 
-    // public void adcionaResposta(String comentario, String email){
-    //     Comentario iniciar = new Comentario(comentario, email);
-    //     hashcomentarios.add(iniciar);
-    // }
+    public void adcionaResposta(String comentario, String email){
+        Comentario iniciar = new Comentario(comentario, email);
+        hashrespostas.add(iniciar);
+    }
 
     public long getId() {
         return id;

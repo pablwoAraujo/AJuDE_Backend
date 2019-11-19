@@ -31,11 +31,9 @@ public class CampanhasService {
         return campanhasDAO.save(campanha);
     }
 
-    /**public Campanha adcionaComentario(long id, String comentario, String email) {
-        Campanha right = this.campanhasDAO.findById(id);
-        right.adcionaComentario(String comentario, String email);
-        return campanhasDAO.save(right);
-    }**/
+    //public Campanha adcionaComentario(Campanha campanha, String comentario, String email) {
+
+    //}
 
     public Optional<Campanha> getCampanha(long id) {
 		return this.campanhasDAO.findById(id);
