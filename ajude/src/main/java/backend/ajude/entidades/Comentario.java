@@ -14,8 +14,8 @@ public class Comentario {
     private long id;
     private String comentario;
     private String email;
-    @JoinColumn(name="Respostas")
-    private Set<Comentario> hashrespostas;
+    // @JoinColumn(name="Respostas")
+    // private Set<Comentario> hashrespostas;
 
     public Comentario(){
         super();
@@ -25,20 +25,20 @@ public class Comentario {
         this.id = id;
         this.comentario = comentario;
         this.email = email;
-        this.hashrespostas = new HashSet<>();
+        // this.hashrespostas = new HashSet<>();
     }
 
     public Comentario(String comentario, String email){
         super();
         this.comentario = comentario;
         this.email = email;
-        this.hashrespostas = new HashSet<>();
+        // this.hashrespostas = new HashSet<>();
     }
 
-    public void adcionaResposta(String comentario, String email){
-        Comentario iniciar = new Comentario(comentario, email);
-        hashrespostas.add(iniciar);
-    }
+    // public void adcionaResposta(String comentario, String email){
+    //     Comentario iniciar = new Comentario(comentario, email);
+    //     hashrespostas.add(iniciar);
+    // }
 
     public long getId() {
         return id;

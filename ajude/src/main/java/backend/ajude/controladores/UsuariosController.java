@@ -27,6 +27,12 @@ public class UsuariosController {
         this.usuariosService = usuariosService;
     }
 
+    @GetMapping("/api")
+    public ResponseEntity<String> naoFazNada(){
+        return new ResponseEntity<String>("voce esta logado", HttpStatus.OK);
+    }
+
+
     @PostMapping("/api/usuarios")
     public ResponseEntity<Usuario> adicionaUsuario(@RequestBody Usuario usuario){
         try {
