@@ -4,6 +4,10 @@ import backend.ajude.entidades.Campanha;
 import backend.ajude.entidades.CreateCampanha;
 import backend.ajude.servicos.CampanhasService;
 
+import backend.ajude.servicos.UsuariosService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,15 +28,20 @@ import javax.servlet.ServletException;
 public class CampanhasController {
 
     private CampanhasService campanhasService;
+    @Autowired
+    private UsuariosService servicoUsuarios;
 
-    public CampanhasController(CampanhasService campanhasService){
+    public CampanhasController(CampanhasService campanhasService, UsuariosService servicoUsuario){
         super();
         this.campanhasService = campanhasService;
+        this.servicoUsuarios = servicoUsuario;
     }
 
     @PostMapping
     public ResponseEntity<Campanha> adicionaCampanha(@RequestBody CreateCampanha campanha) throws ServletException {
-        return new ResponseEntity<Campanha>(this.campanhasService.adicionaCampanha(campanha), HttpStatus.OK);
+        Campanha campanhaFinal = this.campanhasService.transformaCampanha(campanha);
+        campanhaFinal.setDono(this.servicoUsuarios.getUsuario(campanha.getEmail()).get());
+        return new ResponseEntity<Campanha>(this.campanhasService.adicionaCampanha(campanhaFinal), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

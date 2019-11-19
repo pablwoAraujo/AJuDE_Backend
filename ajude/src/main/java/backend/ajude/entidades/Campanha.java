@@ -7,9 +7,13 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import backend.ajude.Enum.StatusCampanha;
 
@@ -26,11 +30,12 @@ public class Campanha {
     private StatusCampanha status;
     private double meta;
     private double doacao;
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name="Comentariossss")
     private Set<Comentario> hashcomentarios;
-
     @ManyToOne
     private Usuario dono;
-    private String comentarios;
     private int likes;
 
     public Campanha() {
@@ -38,7 +43,7 @@ public class Campanha {
     }
 
     public Campanha(long id, String nome, String url, String descricao, Date data, StatusCampanha status, double meta,
-            double doacao, Usuario dono, String comentarios, int likes) {
+            double doacao, Usuario dono, int likes) {
         super();
         this.id = id;
         this.nome = nome;
@@ -49,13 +54,12 @@ public class Campanha {
         this.meta = meta;
         this.doacao = doacao;
         this.dono = dono;
-        this.comentarios = comentarios;
         this.likes = likes;
         this.hashcomentarios = new HashSet<>();
     }
 
     public Campanha(String nome, String url, String descricao, Date data, StatusCampanha status, double meta,
-            double doacao, Usuario dono, String comentarios, int likes) {
+            double doacao, Usuario dono, int likes) {
         super();
         this.nome = nome;
         this.url = url;
@@ -65,7 +69,6 @@ public class Campanha {
         this.meta = meta;
         this.doacao = doacao;
         this.dono = dono;
-        this.comentarios = comentarios;
         this.likes = likes;
         this.hashcomentarios = new HashSet<>();
 
@@ -146,14 +149,6 @@ public class Campanha {
 
     public void setDono(Usuario dono) {
         this.dono = dono;
-    }
-
-    public String getComentarios() {
-        return comentarios;
-    }
-
-    public void setComentarios(String comentarios) {
-        this.comentarios = comentarios;
     }
 
     public int getLikes() {

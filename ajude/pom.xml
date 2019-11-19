@@ -72,10 +72,7 @@
 			<artifactId>postgresql</artifactId>
 		  </dependency>
 
-
-
-
-	</dependencies>
+ </dependencies>
 
 	<build>
 		<plugins>

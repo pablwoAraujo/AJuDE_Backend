@@ -38,7 +38,7 @@ public class UsuariosController {
 
     //sO PRA TRESTE
     @GetMapping("/usuarios/{email}")
-	public ResponseEntity<Usuario> adicionaUsuario(@PathVariable String email) {
+	public ResponseEntity<Usuario> getUsuario(@PathVariable String email) {
 		Optional<Usuario> usuario = this.usuariosService.getUsuario(email);
 		if (usuario.isPresent())
 			return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);

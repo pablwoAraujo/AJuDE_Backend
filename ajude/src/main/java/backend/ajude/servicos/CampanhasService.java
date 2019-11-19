@@ -23,19 +23,13 @@ public class CampanhasService {
         this.campanhasDAO = campanhasDAO;
     }
 
-    public Campanha adicionaCampanha(CreateCampanha campanha) throws ServletException {
+    public Campanha adicionaCampanha(Campanha campanha) throws ServletException {
         Optional<Campanha> provisory = campanhasDAO.findByNome(campanha.getNome());
         if(provisory.isPresent()) {
             throw new ServletException("Campanha já Cadastrada");
         }
-        return criaCampanha(campanha);
+        return campanhasDAO.save(campanha);
     }
-
-    public Campanha criaCampanha(CreateCampanha campanha) throws ServletException{
-        Campanha salvar = new Campanha(campanha.getNome(),campanha.getUrl(),campanha.getDescricao(),campanha.getData(),StatusCampanha.ATIVA,campanha.getMeta(),1.2,null,"",1);
-        return campanhasDAO.save(salvar);
-    }
-
 
     /**public Campanha adcionaComentario(long id, String comentario, String email) {
         Campanha right = this.campanhasDAO.findById(id);
@@ -57,4 +51,9 @@ public class CampanhasService {
         }
         return saida;
     }
+
+    public Campanha transformaCampanha(CreateCampanha campanha) {
+        Campanha salvar = new Campanha(campanha.getNome(),campanha.getUrl(),campanha.getDescricao(),campanha.getData(),StatusCampanha.ATIVA,campanha.getMeta(),0,null,0);
+		return salvar;
+	}
 }

@@ -12,18 +12,20 @@ public class CreateCampanha{
     @Temporal(TemporalType.DATE)
     private Date data;
     private String url;
+    private String email;
 
     public CreateCampanha() {
         super();
     }
 
-    public CreateCampanha(String nome, String descricao, double meta, Date data, String url){
+    public CreateCampanha(String nome, String descricao, double meta, Date data, String url, String email){
         super();
         this.nome = nome;
         this.descricao = descricao;
         this.meta = meta;
         this.data = data;
         this.url = url;
+        this.email = email;
     }
 
     public String getNome() {
@@ -66,4 +68,11 @@ public class CreateCampanha{
         this.url = url;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
