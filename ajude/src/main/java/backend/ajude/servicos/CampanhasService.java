@@ -54,4 +54,8 @@ public class CampanhasService {
         Campanha salvar = new Campanha(campanha.getNome(),campanha.getUrl(),campanha.getDescricao(),campanha.getData(),StatusCampanha.ATIVA,campanha.getMeta(),0,null,0);
 		return salvar;
 	}
+
+	public Optional<Campanha> pesquisaCampanha(String url) {
+		return this.campanhasDAO.findByUrl(url);
+	}
 }

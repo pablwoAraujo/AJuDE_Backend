@@ -53,6 +53,15 @@ public class CampanhasController {
         return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("campanha/{url}")
+    public ResponseEntity<Campanha> pesquisaCampanha(@PathVariable String url){
+        Optional<Campanha> campanha = campanhasService.pesquisaCampanha(url);
+        if(!campanha.isEmpty()){
+            return new ResponseEntity<Campanha>(campanha.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
+    }
+    
     @GetMapping("pesquisar/{nome}")
     public ResponseEntity<List<Campanha>> pesquisaPorNome(@PathVariable String nome){
         List<Campanha> campanha = campanhasService.pesquisaPorNome(nome);
