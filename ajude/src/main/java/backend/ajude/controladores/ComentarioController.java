@@ -40,4 +40,18 @@ public class ComentarioController {
         this.comentariosService.adicionaComentario(comentario);
         return new ResponseEntity<Set<Comentario>>(this.campanhasService.adicionaComentario(comentario, campanha), HttpStatus.OK);
     }
+
+    @PostMapping("/comentaComentario")
+    public ResponseEntity<Comentario> comentarioComentario(@RequestBody ComentarioDTO parcial){
+        Usuario usuario = this.servicoUsuarios.getUsuario(parcial.getEmail()).get();
+        //return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+        Comentario principal = this.comentariosService.getComentario(parcial.getIdCampanha()).get();
+        //return new ResponseEntity<Comentario>(principal, HttpStatus.OK);
+        Comentario novo = this.comentariosService.transformaComentarioCampanha(parcial, principal.getCampanha(), usuario);
+        Comentario comentario = this.comentariosService.adicionaComentario(novo);
+        //return new ResponseEntity<Comentario>(novo, HttpStatus.OK);
+        return new ResponseEntity<Comentario>(this.comentariosService.comentarioComentario(principal, comentario), HttpStatus.OK); 
+        // this.comentariosService.adicionaComentario(comentario);
+        // return new ResponseEntity<Set<Comentario>>(this.campanhasService.adicionaComentario(comentario, campanha), HttpStatus.OK);
+    }
 }

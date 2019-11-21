@@ -28,6 +28,7 @@ public class ComentariosService {
         Optional<Comentario> principal = this.comentariossDAO.findById(comentario1.getId());
         if(principal.isPresent()){
             principal.get().adcionaResposta(comentario2);
+            return this.comentariossDAO.save(principal.get());
         }
         return principal.get();
     }
@@ -36,6 +37,10 @@ public class ComentariosService {
         Comentario comentario = new Comentario(parcial.getComentario(), usuario, campanha);
         return comentario;
     }
+
+	public Optional<Comentario> getComentario(long id) {
+		return this.comentariossDAO.findById(id);
+	}
 
 
 
