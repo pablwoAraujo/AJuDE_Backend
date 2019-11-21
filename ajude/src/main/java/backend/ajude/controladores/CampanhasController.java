@@ -1,6 +1,8 @@
 package backend.ajude.controladores;
 
 import backend.ajude.entidades.Campanha;
+import backend.ajude.entidades.ComentarioDTO;
+import backend.ajude.entidades.Comentario;
 import backend.ajude.entidades.CreateCampanha;
 import backend.ajude.servicos.CampanhasService;
 
@@ -44,16 +46,16 @@ public class CampanhasController {
         return new ResponseEntity<Campanha>(this.campanhasService.adicionaCampanha(campanhaFinal), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Campanha> visualizaCampanha(@PathVariable Long id){
-        Optional<Campanha> campanha = campanhasService.getCampanha(id);
-        if(campanha.isPresent()){
-            return new ResponseEntity<Campanha>(campanha.get(), HttpStatus.OK);
-        }
-        return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
-    }
+    // @GetMapping("/{id}")
+    // public ResponseEntity<Campanha> visualizaCampanha(@PathVariable Long id){
+    //     Optional<Campanha> campanha = campanhasService.getCampanha(id);
+    //     if(campanha.isPresent()){
+    //         return new ResponseEntity<Campanha>(campanha.get(), HttpStatus.OK);
+    //     }
+    //     return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
+    //}
 
-    @GetMapping("campanha/{url}")
+    @GetMapping("/{url}")
     public ResponseEntity<Campanha> pesquisaCampanha(@PathVariable String url){
         Optional<Campanha> campanha = campanhasService.pesquisaCampanha(url);
         if(!campanha.isEmpty()){
@@ -72,9 +74,7 @@ public class CampanhasController {
 
     }
 
-    //* adciona comentario
-
-
+ 
 
 }
 

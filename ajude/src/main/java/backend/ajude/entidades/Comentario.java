@@ -6,41 +6,48 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Comentario {
     @Id
     @GeneratedValue
     private long id;
-    private String comentario;
-    private String email;
+    private String comentario;//
+    @ManyToOne
+    private Usuario usuario;//
     @OneToMany
-    @JoinColumn(name="Respostas")
-    private Set<Comentario> hashrespostas;
+    private Set<Comentario> resposta;
+    @JsonIgnore
+    @ManyToOne
+    private Campanha campanha;//
 
     public Comentario(){
         super();
     }
-    public Comentario(long id, String comentario, String email){
+    public Comentario(long id, String comentario, Usuario usuario, Campanha campanha){
         super();
         this.id = id;
         this.comentario = comentario;
-        this.email = email;
-        this.hashrespostas = new HashSet<>();
+        this.usuario = usuario;
+        this.resposta = new HashSet<>();
+        this.campanha = campanha;
     }
 
-    public Comentario(String comentario, String email){
+    public Comentario(String comentario, Usuario usuario, Campanha campanha){
         super();
         this.comentario = comentario;
-        this.email = email;
-        this.hashrespostas = new HashSet<>();
+        this.usuario = usuario;
+        this.resposta = new HashSet<>();
+        this.campanha = campanha;
+
     }
 
-    public void adcionaResposta(String comentario, String email){
-        Comentario iniciar = new Comentario(comentario, email);
-        hashrespostas.add(iniciar);
+    public void adcionaResposta(Comentario comentario){
+        resposta.add(comentario);
     }
 
     public long getId() {
@@ -51,23 +58,36 @@ public class Comentario {
         return comentario;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
 
-    public Set<Comentario> getHashrespostas() {
-        return hashrespostas;
+    public Set<Comentario> getresposta() {
+        return resposta;
     }
 
-    public void setHashrespostas(Set<Comentario> hashrespostas) {
-        this.hashrespostas = hashrespostas;
+    public void setresposta(Set<Comentario> resposta) {
+        this.resposta = resposta;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(long id) {
+        this.id = id;
     }
+
+    public Campanha getCampanha() {
+        return campanha;
+    }
+
+    public void setCampanha(Campanha campanha) {
+        this.campanha = campanha;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
 }

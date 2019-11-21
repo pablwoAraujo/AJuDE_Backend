@@ -30,9 +30,7 @@ public class Campanha {
     private StatusCampanha status;
     private double meta;
     private double doacao;
-    @JsonIgnore
     @OneToMany
-    @JoinColumn(name="Comentariossss")
     private Set<Comentario> hashcomentarios;
     @ManyToOne
     private Usuario dono;
@@ -74,11 +72,12 @@ public class Campanha {
 
     }
     /** aaaaaaaaaaaaaaaaquii **/
-    public void adcionaComentario(String comentario, String email){
-        Comentario iniciar = new Comentario(comentario, email);
-        hashcomentarios.add(iniciar);
+    public Set<Comentario> adcionaComentario(Comentario comentario){
+        hashcomentarios.add(comentario);
+        return this.hashcomentarios;
     }
 
+    
     public long getId() {
         return id;
     }
@@ -157,5 +156,13 @@ public class Campanha {
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public Set<Comentario> getHashcomentarios() {
+        return hashcomentarios;
+    }
+
+    public void setHashcomentarios(Set<Comentario> hashcomentarios) {
+        this.hashcomentarios = hashcomentarios;
     }
 }
