@@ -3,6 +3,7 @@ package backend.ajude.entidades;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,31 +20,34 @@ public class Comentario {
     private String comentario;//
     @ManyToOne
     private Usuario usuario;//
-    @OneToMany
+    //@OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comentario> resposta;
     @JsonIgnore
     @ManyToOne
     private Campanha campanha;//
+    private Boolean status;
 
     public Comentario(){
         super();
     }
-    public Comentario(long id, String comentario, Usuario usuario, Campanha campanha){
+    public Comentario(long id, String comentario, Usuario usuario, Campanha campanha, Boolean status){
         super();
         this.id = id;
         this.comentario = comentario;
         this.usuario = usuario;
         this.resposta = new HashSet<>();
         this.campanha = campanha;
+        this.status = status;
     }
 
-    public Comentario(String comentario, Usuario usuario, Campanha campanha){
+    public Comentario(String comentario, Usuario usuario, Campanha campanha, Boolean status){
         super();
         this.comentario = comentario;
         this.usuario = usuario;
         this.resposta = new HashSet<>();
         this.campanha = campanha;
-
+        this.status = status;
     }
 
     public void adcionaResposta(Comentario comentario){
@@ -88,6 +92,14 @@ public class Comentario {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
     
 }

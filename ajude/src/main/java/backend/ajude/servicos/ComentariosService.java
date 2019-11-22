@@ -8,6 +8,8 @@ import backend.ajude.repositories.ComentariosRepository;
 
 import java.util.Optional;
 
+import javax.servlet.ServletException;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,13 +36,28 @@ public class ComentariosService {
     }
 
     public Comentario transformaComentarioCampanha(ComentarioDTO parcial, Campanha campanha, Usuario usuario){
-        Comentario comentario = new Comentario(parcial.getComentario(), usuario, campanha);
+        Comentario comentario = new Comentario(parcial.getComentario(), usuario, campanha, true);
         return comentario;
     }
 
 	public Optional<Comentario> getComentario(long id) {
 		return this.comentariossDAO.findById(id);
-	}
+    }
+    
+    public Comentario removeComentario(Comentario comentario) throws ServletException {
+        Optional<Comentario> comem = this.comentariossDAO.findById(comentario.getId());
+        if(comem.isPresent()){
+            Comentario theComentario = comem.get();
+            theComentario.setStatus(false);
+            theComentario.setComentario("");
+            return this.comentariossDAO.save(theComentario);
+        }
+        throw new ServletException("Usuario ja cadastrado");
+    }
+
+	// public Comentario removeComentarioComentario(Comentario comentario) {
+    //     return this.comentariossDAO.findById(comentario.getId()).get();
+	// }
 
 
 

@@ -68,4 +68,14 @@ public class CampanhasService {
         
 	}
 
+    // Desvincula o comentario da campanha 
+    //
+	// public void removeComentario(Campanha campanha, Comentario comentario) {
+    //     Optional<Campanha> campanhaRecuperada = this.campanhasDAO.findById(campanha.getId());
+    //     if(campanhaRecuperada.isPresent()){
+    //         campanhaRecuperada.get().getHashcomentarios().remove(comentario);
+    //         this.campanhasDAO.save(campanhaRecuperada.get());
+    //     }
+	// }
+
 }

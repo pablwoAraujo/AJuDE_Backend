@@ -36,7 +36,7 @@ public class JWTService {
 		return optUsuario.isPresent() && optUsuario.get().getEmail().equals(email);
 	}
 
-	private String getSujeitoDoToken(String authorizationHeader) throws ServletException {
+	public String getSujeitoDoToken(String authorizationHeader) throws ServletException {
 		if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
 			throw new ServletException("Token inexistente ou mal formatado!");
 		}
