@@ -1,5 +1,5 @@
-2019-11-24 15:12:40 database: flush
-org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:/home/pablwo/Documentos/psoft/AJuDE_Backend/dados.mv.db [1.4.199/7]" [50000-199]
+2019-11-24 15:09:18 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:/home/pablwo/Documentos/psoft/AJuDE_Backend/ajude/dados.mv.db [1.4.199/7]" [50000-199]
 	at org.h2.message.DbException.get(DbException.java:194)
 	at org.h2.message.DbException.convert(DbException.java:347)
 	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:90)
@@ -91,17 +91,17 @@ org.h2.message.DbException: General error: "java.lang.IllegalStateException: The
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
 	at backend.ajude.AjudeApplication.main(AjudeApplication.java:37)
-Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.IllegalStateException: The file is locked: nio:/home/pablwo/Documentos/psoft/AJuDE_Backend/dados.mv.db [1.4.199/7]" [50000-199]
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.IllegalStateException: The file is locked: nio:/home/pablwo/Documentos/psoft/AJuDE_Backend/ajude/dados.mv.db [1.4.199/7]" [50000-199]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:502)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:427)
 	... 91 more
-Caused by: java.lang.IllegalStateException: The file is locked: nio:/home/pablwo/Documentos/psoft/AJuDE_Backend/dados.mv.db [1.4.199/7]
+Caused by: java.lang.IllegalStateException: The file is locked: nio:/home/pablwo/Documentos/psoft/AJuDE_Backend/ajude/dados.mv.db [1.4.199/7]
 	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:883)
 	at org.h2.mvstore.FileStore.open(FileStore.java:172)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:390)
 	... 85 more
-2019-11-24 15:12:41 database: flush
-org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:/home/pablwo/Documentos/psoft/AJuDE_Backend/dados.mv.db [1.4.199/7]" [50000-199]
+2019-11-24 15:09:19 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: The file is locked: nio:/home/pablwo/Documentos/psoft/AJuDE_Backend/ajude/dados.mv.db [1.4.199/7]" [50000-199]
 	at org.h2.message.DbException.get(DbException.java:194)
 	at org.h2.message.DbException.convert(DbException.java:347)
 	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:90)
@@ -170,11 +170,11 @@ org.h2.message.DbException: General error: "java.lang.IllegalStateException: The
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1226)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1215)
 	at backend.ajude.AjudeApplication.main(AjudeApplication.java:37)
-Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.IllegalStateException: The file is locked: nio:/home/pablwo/Documentos/psoft/AJuDE_Backend/dados.mv.db [1.4.199/7]" [50000-199]
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.IllegalStateException: The file is locked: nio:/home/pablwo/Documentos/psoft/AJuDE_Backend/ajude/dados.mv.db [1.4.199/7]" [50000-199]
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:502)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:427)
 	... 68 more
-Caused by: java.lang.IllegalStateException: The file is locked: nio:/home/pablwo/Documentos/psoft/AJuDE_Backend/dados.mv.db [1.4.199/7]
+Caused by: java.lang.IllegalStateException: The file is locked: nio:/home/pablwo/Documentos/psoft/AJuDE_Backend/ajude/dados.mv.db [1.4.199/7]
 	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:883)
 	at org.h2.mvstore.FileStore.open(FileStore.java:172)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:390)

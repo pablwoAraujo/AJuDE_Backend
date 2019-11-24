@@ -34,14 +34,15 @@ public class Campanha {
     private Set<Comentario> hashcomentarios;
     @ManyToOne
     private Usuario dono;
-    private int likes;
+    @OneToMany
+    private Set<Like> likes;
 
     public Campanha() {
         super();
     }
 
     public Campanha(long id, String nome, String url, String descricao, Date data, StatusCampanha status, double meta,
-            double doacao, Usuario dono, int likes) {
+            double doacao, Usuario dono) {
         super();
         this.id = id;
         this.nome = nome;
@@ -52,12 +53,12 @@ public class Campanha {
         this.meta = meta;
         this.doacao = doacao;
         this.dono = dono;
-        this.likes = likes;
+        this.likes =  new HashSet<>();
         this.hashcomentarios = new HashSet<>();
     }
 
     public Campanha(String nome, String url, String descricao, Date data, StatusCampanha status, double meta,
-            double doacao, Usuario dono, int likes) {
+            double doacao, Usuario dono) {
         super();
         this.nome = nome;
         this.url = url;
@@ -67,7 +68,7 @@ public class Campanha {
         this.meta = meta;
         this.doacao = doacao;
         this.dono = dono;
-        this.likes = likes;
+        this.likes = new HashSet<>();
         this.hashcomentarios = new HashSet<>();
 
     }
@@ -150,11 +151,11 @@ public class Campanha {
         this.dono = dono;
     }
 
-    public int getLikes() {
+    public Set<Like> getLikes() {
         return likes;
     }
 
-    public void setLikes(int likes) {
+    public void setLikes(Set<Like> likes) {
         this.likes = likes;
     }
 
@@ -165,4 +166,8 @@ public class Campanha {
     public void setHashcomentarios(Set<Comentario> hashcomentarios) {
         this.hashcomentarios = hashcomentarios;
     }
+
+	public void adcionaLike(Like like) {
+        this.likes.add(like);
+	}
 }

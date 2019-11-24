@@ -11,7 +11,9 @@ import backend.ajude.Enum.StatusCampanha;
 import backend.ajude.entidades.Campanha;
 import backend.ajude.entidades.Comentario;
 import backend.ajude.entidades.CreateCampanha;
+import backend.ajude.entidades.Like;
 import backend.ajude.repositories.CampanhasRepository;
+import backend.ajude.repositories.LikeRepository;
 
 import org.springframework.stereotype.Service;
 
@@ -19,10 +21,13 @@ import org.springframework.stereotype.Service;
 public class CampanhasService {
 
     private CampanhasRepository<Campanha, Long> campanhasDAO;
+    private LikeRepository<Campanha, Long> likesDAO;
 
-    public CampanhasService(CampanhasRepository<Campanha, Long> campanhasDAO) {
+
+    public CampanhasService(CampanhasRepository<Campanha, Long> campanhasDAO, LikeRepository<Campanha, Long> likesDAO) {
         super();
         this.campanhasDAO = campanhasDAO;
+        this.likesDAO = likesDAO;
     }
 
     public Campanha adicionaCampanha(Campanha campanha) throws ServletException {
@@ -50,7 +55,7 @@ public class CampanhasService {
 
     public Campanha transformaCampanha(CreateCampanha campanha) {
         Campanha salvar = new Campanha(campanha.getNome(), campanha.getUrl(), campanha.getDescricao(),
-                campanha.getData(), StatusCampanha.ATIVA, campanha.getMeta(), 0, null, 0);
+                campanha.getData(), StatusCampanha.ATIVA, campanha.getMeta(), 0, null);
         return salvar;
     }
 
@@ -66,6 +71,20 @@ public class CampanhasService {
         }
         return null;
         
+	}
+
+	public Campanha like(Campanha campanha, Like like) {
+        Set<Like> likes = campanha.getLikes();
+        for (Like c: likes){
+            if(c.getUser().equals(like.getUser())){
+                likes.remove(c);
+                this.likesDAO.delete(like);
+                return this.campanhasDAO.save(campanha);
+            }
+        }
+        this.likesDAO.save(like);
+        campanha.adcionaLike(like);
+		return this.campanhasDAO.save(campanha);
 	}
 
     // Desvincula o comentario da campanha 
