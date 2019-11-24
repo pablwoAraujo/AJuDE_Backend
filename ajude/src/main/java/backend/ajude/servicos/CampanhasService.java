@@ -78,13 +78,25 @@ public class CampanhasService {
         for (Like c: likes){
             if(c.getUser().equals(like.getUser())){
                 likes.remove(c);
-                this.likesDAO.delete(like);
+                Like provisorio = new Like(c.getId(), c.getUser());
+                this.likesDAO.delete(provisorio);
                 return this.campanhasDAO.save(campanha);
             }
         }
         this.likesDAO.save(like);
         campanha.adcionaLike(like);
 		return this.campanhasDAO.save(campanha);
+	}
+
+	public List<Campanha> pesquisaPorUsuario(String email) {
+        List<Campanha> campanhas = campanhasDAO.findAll();
+        List<Campanha> saida = new ArrayList<Campanha>();
+        for (int i = 0; i < campanhas.size(); i++) {
+            if (campanhas.get(i).getDono().getEmail().toLowerCase().contains(email.toLowerCase())) {
+                saida.add(campanhas.get(i));
+            }
+        }
+        return saida;
 	}
 
     // Desvincula o comentario da campanha 

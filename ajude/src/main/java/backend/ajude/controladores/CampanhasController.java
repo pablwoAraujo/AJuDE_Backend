@@ -4,6 +4,7 @@ import backend.ajude.entidades.Campanha;
 import backend.ajude.entidades.ComentarioDTO;
 import backend.ajude.entidades.Comentario;
 import backend.ajude.entidades.CreateCampanha;
+import backend.ajude.entidades.Usuario;
 import backend.ajude.servicos.CampanhasService;
 import backend.ajude.servicos.JWTService;
 import backend.ajude.servicos.LikeService;
@@ -63,6 +64,16 @@ public class CampanhasController {
             return new ResponseEntity<Campanha>(campanha.get(), HttpStatus.OK);
         }
         return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("usuario/{email}")
+    public ResponseEntity<List<Campanha>> pesquisaPorUsuario(@PathVariable String email){
+        // Usuario usuario = this.servicoUsuarios.getUsuario(email).get();
+        List<Campanha> campanha = campanhasService.pesquisaPorUsuario(email);
+        if(!campanha.isEmpty()){
+            return new ResponseEntity<List<Campanha>>(campanha, HttpStatus.OK);
+        }
+        return new ResponseEntity<List<Campanha>>(HttpStatus.NOT_FOUND);
     }
     
     @GetMapping("pesquisar/{nome}")

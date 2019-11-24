@@ -25,7 +25,7 @@ public class Like{
         this.user= user;
     }
 
-    public Like(int id, Usuario user){
+    public Like(long id, Usuario user){
         super();
         this.id = id;
         this.user= user;
