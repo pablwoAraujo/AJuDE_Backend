@@ -99,6 +99,11 @@ public class CampanhasService {
         return saida;
 	}
 
+	public Campanha encerraCampanha(Campanha campanha) {
+        campanha.setStatus(StatusCampanha.ENCERRADA);
+        return this.campanhasDAO.save(campanha);
+	}
+
     // Desvincula o comentario da campanha 
     //
 	// public void removeComentario(Campanha campanha, Comentario comentario) {

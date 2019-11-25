@@ -1,5 +1,6 @@
 package backend.ajude.controladores;
 
+import backend.ajude.Enum.StatusCampanha;
 import backend.ajude.entidades.Campanha;
 import backend.ajude.entidades.ComentarioDTO;
 import backend.ajude.entidades.Comentario;
@@ -18,7 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,11 +37,14 @@ public class CampanhasController {
     private CampanhasService campanhasService;
     @Autowired
     private UsuariosService servicoUsuarios;
+    private JWTService jwtService;
 
-    public CampanhasController(CampanhasService campanhasService, UsuariosService servicoUsuario){
+
+    public CampanhasController(CampanhasService campanhasService, UsuariosService servicoUsuario, JWTService jwtService){
         super();
         this.campanhasService = campanhasService;
         this.servicoUsuarios = servicoUsuario;
+        this.jwtService = jwtService;
     }
 
     @PostMapping
@@ -56,6 +62,21 @@ public class CampanhasController {
     //     }
     //     return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
     //}
+    @PutMapping("/encerar/{id}")
+    public ResponseEntity<Campanha> encerraCampanha(@PathVariable long id, @RequestHeader("Authorization") String header) throws ServletException {
+        Optional<Campanha> campanha = campanhasService.getCampanha(id);
+        String email = this.jwtService.getSujeitoDoToken(header);
+        if(campanha.isPresent()){
+            if(email.equals(campanha.get().getDono().getEmail())){
+                Campanha reposta = this.campanhasService.encerraCampanha(campanha.get());
+                return new ResponseEntity<Campanha>(reposta, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<Campanha>(HttpStatus.UNAUTHORIZED);
+            }
+        }
+        return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
+    }
+
 
     @GetMapping("/{url}")
     public ResponseEntity<Campanha> pesquisaCampanha(@PathVariable String url){
