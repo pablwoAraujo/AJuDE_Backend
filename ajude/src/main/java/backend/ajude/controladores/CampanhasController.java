@@ -60,7 +60,7 @@ public class CampanhasController {
     @GetMapping("/{url}")
     public ResponseEntity<Campanha> pesquisaCampanha(@PathVariable String url){
         Optional<Campanha> campanha = campanhasService.pesquisaCampanha(url);
-        if(!campanha.isEmpty()){
+        if(campanha.isPresent()){
             return new ResponseEntity<Campanha>(campanha.get(), HttpStatus.OK);
         }
         return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
