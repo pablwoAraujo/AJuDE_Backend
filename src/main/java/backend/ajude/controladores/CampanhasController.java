@@ -66,7 +66,7 @@ public class CampanhasController {
     public ResponseEntity<Campanha> encerraCampanha(@PathVariable long id, @RequestHeader("Authorization") String header) throws ServletException {
         Optional<Campanha> campanha = campanhasService.getCampanha(id);
         String email = this.jwtService.getSujeitoDoToken(header);
-        if(campanha.isPresent()){
+        if(campanha.isPresent()){            
             if(email.equals(campanha.get().getDono().getEmail())){
                 Campanha reposta = this.campanhasService.encerraCampanha(campanha.get());
                 return new ResponseEntity<Campanha>(reposta, HttpStatus.OK);
