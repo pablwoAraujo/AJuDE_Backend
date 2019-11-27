@@ -1,14 +1,9 @@
 package backend.ajude.controladores;
 
-import backend.ajude.Enum.StatusCampanha;
 import backend.ajude.entidades.Campanha;
-import backend.ajude.entidades.ComentarioDTO;
-import backend.ajude.entidades.Comentario;
 import backend.ajude.entidades.CreateCampanha;
-import backend.ajude.entidades.Usuario;
 import backend.ajude.servicos.CampanhasService;
 import backend.ajude.servicos.JWTService;
-import backend.ajude.servicos.LikeService;
 import backend.ajude.servicos.UsuariosService;
 
 import org.springframework.beans.factory.annotation.Autowired;

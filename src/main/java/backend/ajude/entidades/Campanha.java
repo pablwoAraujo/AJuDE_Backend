@@ -7,13 +7,10 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import backend.ajude.Enum.StatusCampanha;
 
@@ -30,6 +27,8 @@ public class Campanha {
     private StatusCampanha status;
     private double meta;
     private double doacao;
+    @OneToMany
+    private Set<Doacao> doacoes;
     @OneToMany
     private Set<Comentario> hashcomentarios;
     @ManyToOne
@@ -55,6 +54,7 @@ public class Campanha {
         this.dono = dono;
         this.likes =  new HashSet<>();
         this.hashcomentarios = new HashSet<>();
+        this.doacoes = new HashSet<>();
     }
 
     public Campanha(String nome, String url, String descricao, Date data, StatusCampanha status, double meta,
@@ -68,17 +68,25 @@ public class Campanha {
         this.meta = meta;
         this.doacao = doacao;
         this.dono = dono;
-        this.likes = new HashSet<>();
+        this.likes =  new HashSet<>();
         this.hashcomentarios = new HashSet<>();
-
+        this.doacoes = new HashSet<>();
     }
-    /** aaaaaaaaaaaaaaaaquii **/
+
     public Set<Comentario> adcionaComentario(Comentario comentario){
         hashcomentarios.add(comentario);
         return this.hashcomentarios;
     }
 
-    
+    public Set<Doacao> adcionaDoacao(Doacao doacao){
+        this.doacoes.add(doacao);
+        return this.doacoes;
+    }
+
+	public void adcionaLike(Like like) {
+        this.likes.add(like);
+	}
+
     public long getId() {
         return id;
     }
@@ -87,11 +95,19 @@ public class Campanha {
         this.id = id;
     }
 
-    public String geturl() {
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getUrl() {
         return url;
     }
 
-    public void seturl(String url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 
@@ -101,14 +117,6 @@ public class Campanha {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public Date getData() {
@@ -143,6 +151,22 @@ public class Campanha {
         this.doacao = doacao;
     }
 
+    public Set<Doacao> getDoacoes() {
+        return doacoes;
+    }
+
+    public void setDoacoes(Set<Doacao> doacoes) {
+        this.doacoes = doacoes;
+    }
+
+    public Set<Comentario> getHashcomentarios() {
+        return hashcomentarios;
+    }
+
+    public void setHashcomentarios(Set<Comentario> hashcomentarios) {
+        this.hashcomentarios = hashcomentarios;
+    }
+
     public Usuario getDono() {
         return dono;
     }
@@ -159,15 +183,4 @@ public class Campanha {
         this.likes = likes;
     }
 
-    public Set<Comentario> getHashcomentarios() {
-        return hashcomentarios;
-    }
-
-    public void setHashcomentarios(Set<Comentario> hashcomentarios) {
-        this.hashcomentarios = hashcomentarios;
-    }
-
-	public void adcionaLike(Like like) {
-        this.likes.add(like);
-	}
 }

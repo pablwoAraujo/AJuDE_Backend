@@ -20,7 +20,6 @@ public class Comentario {
     private String comentario;//
     @ManyToOne
     private Usuario usuario;//
-    //@OneToMany
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comentario> resposta;
     @JsonIgnore

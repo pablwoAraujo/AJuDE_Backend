@@ -11,6 +11,7 @@ import backend.ajude.Enum.StatusCampanha;
 import backend.ajude.entidades.Campanha;
 import backend.ajude.entidades.Comentario;
 import backend.ajude.entidades.CreateCampanha;
+import backend.ajude.entidades.Doacao;
 import backend.ajude.entidades.Like;
 import backend.ajude.repositories.CampanhasRepository;
 import backend.ajude.repositories.LikeRepository;
@@ -102,6 +103,12 @@ public class CampanhasService {
 	public Campanha encerraCampanha(Campanha campanha) {
         campanha.setStatus(StatusCampanha.ENCERRADA);
         return this.campanhasDAO.save(campanha);
+	}
+
+	public Campanha doar(Campanha campanha, Doacao doacao) {
+        Campanha auxiliar = this.campanhasDAO.findById(campanha.getId()).get();
+        auxiliar.adcionaDoacao(doacao);
+		return this.campanhasDAO.save(auxiliar);
 	}
 
     // Desvincula o comentario da campanha 

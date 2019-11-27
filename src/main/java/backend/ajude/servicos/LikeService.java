@@ -15,12 +15,9 @@ public class LikeService {
         this.likesDAO = likesDAO;
     }
 
-
     public Like salvaLike(Usuario Usuario){
         Like like = new Like(Usuario);
         return this.likesDAO.save(like);
     }
-
-    
 
 }
