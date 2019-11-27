@@ -25,7 +25,6 @@ public class LikeControll {
     private UsuariosService usuarioService;
     private CampanhasService campanhasService;
 
-
     public LikeControll(LikeService likeService, JWTService jwtService, UsuariosService usuarioService, CampanhasService campanhasService){
         super();
         this.likeService = likeService;
@@ -43,6 +42,4 @@ public class LikeControll {
         // return new ResponseEntity<Campanha>(campanha, HttpStatus.OK);
         return new ResponseEntity<Campanha>(this.campanhasService.like(campanha, like), HttpStatus.OK);
     }
-
-
 }

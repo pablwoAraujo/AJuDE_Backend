@@ -21,7 +21,6 @@ public class UsuariosController {
 
     private UsuariosService usuariosService;
 
-
     public UsuariosController(UsuariosService usuariosService) {
         super();
         this.usuariosService = usuariosService;
@@ -32,7 +31,6 @@ public class UsuariosController {
         return new ResponseEntity<String>("voce esta logado", HttpStatus.OK);
     }
 
-
     @PostMapping("/api/usuarios")
     public ResponseEntity<Usuario> adicionaUsuario(@RequestBody Usuario usuario){
         try {
@@ -42,7 +40,6 @@ public class UsuariosController {
         }
 	}
 
-    //sO PRA TRESTE
     @GetMapping("/usuarios/{email}")
 	public ResponseEntity<Usuario> getUsuario(@PathVariable String email) {
 		Optional<Usuario> usuario = this.usuariosService.getUsuario(email);
@@ -51,5 +48,4 @@ public class UsuariosController {
 
 		return new ResponseEntity<Usuario>(HttpStatus.NOT_FOUND);
 	}
-
 }

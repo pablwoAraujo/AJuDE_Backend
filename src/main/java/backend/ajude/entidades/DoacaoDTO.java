@@ -11,12 +11,7 @@ public class DoacaoDTO {
     @Temporal(TemporalType.DATE)
     private Date data;
 
-    // public DoacaoDTO(){
-    //     super();
-    // }
-
     public DoacaoDTO(float valor,int idCampanha,Date data){
-        // super();
         this.valor = valor;
         this.idCampanha = idCampanha;
         this.data = data;

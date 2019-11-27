@@ -39,7 +39,6 @@ public class ComentarioController {
 
     }
     
-    //faz um comentario na campanha
     @PostMapping("/comentaCampanha")
     public ResponseEntity<Set<Comentario>> comentarioCampanha(@RequestBody ComentarioDTO parcial,@RequestHeader("Authorization") String header) throws ServletException {
         String email = this.jwtService.getSujeitoDoToken(header);
@@ -56,15 +55,10 @@ public class ComentarioController {
     public ResponseEntity<Comentario> comentarioComentario(@RequestBody ComentarioDTO parcial,@RequestHeader("Authorization") String header) throws ServletException {
         String email = this.jwtService.getSujeitoDoToken(header);
         Usuario usuario = this.servicoUsuarios.getUsuario(email).get();
-        //return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
         Comentario principal = this.comentariosService.getComentario(parcial.getIdCampanha()).get();
-        //return new ResponseEntity<Comentario>(principal, HttpStatus.OK);
         Comentario novo = this.comentariosService.transformaComentarioCampanha(parcial, principal.getCampanha(), usuario);
         Comentario comentario = this.comentariosService.adicionaComentario(novo);
-        //return new ResponseEntity<Comentario>(novo, HttpStatus.OK);
         return new ResponseEntity<Comentario>(this.comentariosService.comentarioComentario(principal, comentario), HttpStatus.OK); 
-        // this.comentariosService.adicionaComentario(comentario);
-        // return new ResponseEntity<Set<Comentario>>(this.campanhasService.adicionaComentario(comentario, campanha), HttpStatus.OK);
     }
 
     @DeleteMapping("/apagarComentario/{id}")
@@ -73,25 +67,8 @@ public class ComentarioController {
         Optional<Comentario> comentario = this.comentariosService.getComentario(id);
         String emailDono = comentario.get().getUsuario().getEmail();
         if(email.equals(emailDono)){
-            //this.campanhasService.removeComentario(comentario.get().getCampanha(), comentario.get());
-            //nao faz nada falta setar o boolean que eu ainda nao fiz
             return new ResponseEntity<Comentario>(this.comentariosService.removeComentario(comentario.get()),HttpStatus.OK);
         }
         return new ResponseEntity<Comentario>(HttpStatus.NOT_FOUND);
     }
-
-    // @DeleteMapping("/apagarComentario/comentario/{id}")
-    // public ResponseEntity<Comentario> removerComentarioComentario(@PathVariable Long id,@RequestHeader("Authorization") String header) throws ServletException{
-    //     String email = this.jwtService.getSujeitoDoToken(header);
-    //     Optional<Comentario> comentario = this.comentariosService.getComentario(id);
-    //     String emailDono = comentario.get().getUsuario().getEmail();
-    //     if(email.equals(emailDono)){
-    //         return new ResponseEntity<Comentario>(this.comentariosService.removeComentario(comentario.get()), HttpStatus.OK);
-    //         //this.campanhasService.removeComentario(comentario.get().getCampanha(), comentario.get());
-    //         //nao faz nada falta setar o boolean que eu ainda nao fiz
-    //         //return new ResponseEntity<Comentario>(this.comentariosService.removeComentario(comentario.get()),HttpStatus.OK);
-    //     }
-    //     return new ResponseEntity<Comentario>(HttpStatus.NOT_FOUND);
-    // }
-
 }

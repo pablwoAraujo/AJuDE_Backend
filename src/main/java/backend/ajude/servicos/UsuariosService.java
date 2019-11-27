@@ -15,7 +15,6 @@ public class UsuariosService {
     private UsuariosRepository<Usuario, String> usuariosDAO;
     private EnvioEmail envioEmail;
 
-
     public UsuariosService(UsuariosRepository<Usuario, String> usuariosDAO, EnvioEmail envioEmail){
         super();
         this.usuariosDAO = usuariosDAO;
@@ -34,5 +33,4 @@ public class UsuariosService {
     public Optional<Usuario> getUsuario(String email) {
 		return this.usuariosDAO.findByEmail(email);
 	}
-
 }

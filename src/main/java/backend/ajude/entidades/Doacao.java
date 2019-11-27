@@ -86,6 +86,4 @@ public class Doacao{
     public void setData(Date data) {
         this.data = data;
     }
-
-    
 }

@@ -34,7 +34,6 @@ public class CampanhasController {
     private UsuariosService servicoUsuarios;
     private JWTService jwtService;
 
-
     public CampanhasController(CampanhasService campanhasService, UsuariosService servicoUsuario, JWTService jwtService){
         super();
         this.campanhasService = campanhasService;
@@ -49,14 +48,6 @@ public class CampanhasController {
         return new ResponseEntity<Campanha>(this.campanhasService.adicionaCampanha(campanhaFinal), HttpStatus.OK);
     }
 
-    // @GetMapping("/{id}")
-    // public ResponseEntity<Campanha> visualizaCampanha(@PathVariable Long id){
-    //     Optional<Campanha> campanha = campanhasService.getCampanha(id);
-    //     if(campanha.isPresent()){
-    //         return new ResponseEntity<Campanha>(campanha.get(), HttpStatus.OK);
-    //     }
-    //     return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
-    //}
     @PutMapping("/encerar/{id}")
     public ResponseEntity<Campanha> encerraCampanha(@PathVariable long id, @RequestHeader("Authorization") String header) throws ServletException {
         Optional<Campanha> campanha = campanhasService.getCampanha(id);
@@ -71,7 +62,6 @@ public class CampanhasController {
         }
         return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
     }
-
 
     @GetMapping("/{url}")
     public ResponseEntity<Campanha> pesquisaCampanha(@PathVariable String url){
@@ -99,10 +89,11 @@ public class CampanhasController {
             return new ResponseEntity<List<Campanha>>(campanha, HttpStatus.OK);
         }
         return new ResponseEntity<List<Campanha>>(HttpStatus.NOT_FOUND);
-
     }
 
-    
-
+    @GetMapping("ordena/{atributo}")
+    public ResponseEntity<List<Campanha>> ordenaCampanhas(@PathVariable String atributo){
+        return new ResponseEntity<List<Campanha>>(this.campanhasService.ordenaCampanhas(atributo), HttpStatus.OK);
+    }
 }
 

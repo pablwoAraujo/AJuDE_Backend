@@ -1,6 +1,7 @@
 package backend.ajude.servicos;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -13,6 +14,9 @@ import backend.ajude.entidades.Comentario;
 import backend.ajude.entidades.CreateCampanha;
 import backend.ajude.entidades.Doacao;
 import backend.ajude.entidades.Like;
+import backend.ajude.ordenacao.OrdenacaoPorData;
+import backend.ajude.ordenacao.OrdenacaoPorLikes;
+import backend.ajude.ordenacao.OrdenacaoPorMeta;
 import backend.ajude.repositories.CampanhasRepository;
 import backend.ajude.repositories.LikeRepository;
 
@@ -23,7 +27,6 @@ public class CampanhasService {
 
     private CampanhasRepository<Campanha, Long> campanhasDAO;
     private LikeRepository<Campanha, Long> likesDAO;
-
 
     public CampanhasService(CampanhasRepository<Campanha, Long> campanhasDAO, LikeRepository<Campanha, Long> likesDAO) {
         super();
@@ -108,17 +111,32 @@ public class CampanhasService {
 	public Campanha doar(Campanha campanha, Doacao doacao) {
         Campanha auxiliar = this.campanhasDAO.findById(campanha.getId()).get();
         auxiliar.adcionaDoacao(doacao);
+        auxiliar.setDoacao(auxiliar.getDoacao()+doacao.getValor());
 		return this.campanhasDAO.save(auxiliar);
 	}
 
-    // Desvincula o comentario da campanha 
-    //
-	// public void removeComentario(Campanha campanha, Comentario comentario) {
-    //     Optional<Campanha> campanhaRecuperada = this.campanhasDAO.findById(campanha.getId());
-    //     if(campanhaRecuperada.isPresent()){
-    //         campanhaRecuperada.get().getHashcomentarios().remove(comentario);
-    //         this.campanhasDAO.save(campanhaRecuperada.get());
-    //     }
-	// }
+	public List<Campanha> ordenaCampanhas(String atributo) {
+        List<Campanha> lista = this.campanhasDAO.findAll();
+        List<Campanha> listaOrdenada = new ArrayList<Campanha>();
+
+        if(atributo.equals("like")){
+            Collections.sort(lista, new OrdenacaoPorLikes());
+        }else if(atributo.equals("data")){
+            Collections.sort(lista, new OrdenacaoPorData());
+        }else{
+            Collections.sort(lista, new OrdenacaoPorMeta());
+        }
+
+        int contador = 0;
+        for(Campanha campanha: lista){
+            if (contador<5){
+                if(campanha.getStatus().equals(StatusCampanha.ATIVA)){
+                    listaOrdenada.add(campanha);
+                    contador++;
+                }
+            }
+        }
+        return listaOrdenada;	
+    }
 
 }

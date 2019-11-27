@@ -16,6 +16,7 @@ public class Usuario{
     public Usuario(){
         super();
     }
+
     public Usuario(String email, String primeiroNome, String ultimoNome, int cartaoCredito, String senha){
         super();
         this.email = email;
@@ -64,5 +65,4 @@ public class Usuario{
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
 }

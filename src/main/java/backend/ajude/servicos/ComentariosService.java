@@ -55,12 +55,4 @@ public class ComentariosService {
         throw new ServletException("Usuario ja cadastrado");
     }
 
-	// public Comentario removeComentarioComentario(Comentario comentario) {
-    //     return this.comentariossDAO.findById(comentario.getId()).get();
-	// }
-
-
-
-
-
 }
