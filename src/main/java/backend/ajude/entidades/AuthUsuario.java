@@ -1,5 +1,8 @@
 package backend.ajude.entidades;
 
+/**
+ * Entidade Criada para autenticar o usuario por meio de seu email e senha
+ */
 public class AuthUsuario{
 
     private String email;

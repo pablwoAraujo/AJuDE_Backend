@@ -21,7 +21,6 @@ import java.util.Optional;
 
 import javax.servlet.ServletException;
 
-
 @RestController
 public class CampanhasController {
 
@@ -37,17 +36,31 @@ public class CampanhasController {
     }
 
     @PostMapping("/api/campanhas")
-    public ResponseEntity<Campanha> adicionaCampanha(@RequestBody CreateCampanha campanha) throws ServletException {
+    public ResponseEntity<Campanha> adicionaCampanha(@RequestBody CreateCampanha campanha) {
         this.campanhasService.verificaValidade();
-        Campanha campanhaFinal = this.campanhasService.transformaCampanha(campanha);
+        Campanha campanhaFinal;
+        try {
+            campanhaFinal = this.campanhasService.transformaCampanha(campanha);
+        } catch (ServletException e1) {
+            return new ResponseEntity<Campanha>(HttpStatus.BAD_REQUEST);      
+        }
         campanhaFinal.setDono(this.servicoUsuarios.getUsuario(campanha.getEmail()).get());
-        return new ResponseEntity<Campanha>(this.campanhasService.adicionaCampanha(campanhaFinal), HttpStatus.OK);
+        try {
+            return new ResponseEntity<Campanha>(this.campanhasService.adicionaCampanha(campanhaFinal), HttpStatus.CREATED);
+        } catch (ServletException e) {
+            return new ResponseEntity<Campanha>(HttpStatus.CONFLICT);      
+        }  
     }
 
     @PutMapping("/api/campanhas/encerar/{id}")
-    public ResponseEntity<Campanha> encerraCampanha(@PathVariable long id, @RequestHeader("Authorization") String header) throws ServletException {
+    public ResponseEntity<Campanha> encerraCampanha(@PathVariable long id, @RequestHeader("Authorization") String header) {
         Optional<Campanha> campanha = campanhasService.getCampanha(id);
-        String email = this.jwtService.getSujeitoDoToken(header);
+        String email;
+        try {
+            email = this.jwtService.getSujeitoDoToken(header);
+        } catch (ServletException e) {
+            return new ResponseEntity<Campanha>(HttpStatus.UNAUTHORIZED);
+        }
         if(campanha.isPresent()){            
             if(email.equals(campanha.get().getDono().getEmail())){
                 Campanha reposta = this.campanhasService.encerraCampanha(campanha.get());
@@ -60,9 +73,14 @@ public class CampanhasController {
     }
 
     @PutMapping("/api/campanhas/setDescricao/{id}")
-    public ResponseEntity<Campanha> setDescricao(@PathVariable long id,@RequestBody String descricao ,@RequestHeader("Authorization") String header) throws ServletException {
+    public ResponseEntity<Campanha> setDescricao(@PathVariable long id,@RequestBody String descricao ,@RequestHeader("Authorization") String header) {
         Optional<Campanha> campanha = campanhasService.getCampanha(id);
-        String email = this.jwtService.getSujeitoDoToken(header);
+        String email;
+        try {
+            email = this.jwtService.getSujeitoDoToken(header);
+        } catch (ServletException e) {
+            return new ResponseEntity<Campanha>(HttpStatus.UNAUTHORIZED);
+        }
         if(campanha.isPresent()){            
             if(email.equals(campanha.get().getDono().getEmail())){
                 Campanha reposta = this.campanhasService.setDescricao(campanha.get(), descricao);

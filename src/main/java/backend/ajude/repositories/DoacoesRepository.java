@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import backend.ajude.entidades.Doacao;
 
+/**
+ * Repositorio de Doacoes
+ */
 @Repository
 public interface DoacoesRepository<T, ID extends Serializable> extends JpaRepository<Doacao, Long> {
 

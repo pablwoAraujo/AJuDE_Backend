@@ -4,6 +4,9 @@ import java.util.Date;
 
 import backend.ajude.entidades.Campanha;
 
+/**
+ * Classe criada para facilitar a ordenacao das campanhas a partir da data
+ */
 public class OrdenacaoPorData implements Comparadores{
 
     @Override

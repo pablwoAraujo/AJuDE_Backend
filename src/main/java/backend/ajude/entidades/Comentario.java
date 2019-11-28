@@ -15,6 +15,9 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * Entidade Comentario
+ */
 @Entity
 public class Comentario {
     @Id
@@ -57,6 +60,10 @@ public class Comentario {
         this.data = data;
     }
 
+    /**
+     * Adiciona uma resposta(cometario) a um comentario ja existente
+     * @param comentario
+     */
     public void adcionaResposta(Comentario comentario){
         resposta.add(comentario);
     }

@@ -40,33 +40,48 @@ public class ComentarioController {
     }
     
     @PostMapping("/comentaCampanha")
-    public ResponseEntity<List<Comentario>> comentarioCampanha(@RequestBody ComentarioDTO parcial,@RequestHeader("Authorization") String header) throws ServletException {
-        String email = this.jwtService.getSujeitoDoToken(header);
+    public ResponseEntity<List<Comentario>> comentarioCampanha(@RequestBody ComentarioDTO parcial,@RequestHeader("Authorization") String header) {
+        String email;
+        try {
+            email = this.jwtService.getSujeitoDoToken(header);
+        } catch (ServletException e) {
+            return new ResponseEntity<List<Comentario>>(HttpStatus.UNAUTHORIZED);
+        }
         Usuario usuario = this.servicoUsuarios.getUsuario(email).get();
         Campanha campanha = this.campanhasService.getCampanha(parcial.getIdCampanha()).get();
         Comentario comentario = this.comentariosService.transformaComentarioCampanha(parcial, campanha, usuario);
         this.comentariosService.adicionaComentario(comentario);
-        return new ResponseEntity<List<Comentario>>(this.campanhasService.adicionaComentario(comentario, campanha), HttpStatus.OK);
+        return new ResponseEntity<List<Comentario>>(this.campanhasService.adicionaComentario(comentario, campanha), HttpStatus.CREATED);
     }
 
     @PostMapping("/comentaComentario")
-    public ResponseEntity<Comentario> comentarioComentario(@RequestBody ComentarioDTO parcial,@RequestHeader("Authorization") String header) throws ServletException {
-        String email = this.jwtService.getSujeitoDoToken(header);
+    public ResponseEntity<Comentario> comentarioComentario(@RequestBody ComentarioDTO parcial,@RequestHeader("Authorization") String header) {
+        String email;
+        try {
+            email = this.jwtService.getSujeitoDoToken(header);
+        } catch (ServletException e) {
+            return new ResponseEntity<Comentario>(HttpStatus.UNAUTHORIZED); 
+        }
         Usuario usuario = this.servicoUsuarios.getUsuario(email).get();
         Comentario principal = this.comentariosService.getComentario(parcial.getIdCampanha()).get();
         Comentario novo = this.comentariosService.transformaComentarioCampanha(parcial, principal.getCampanha(), usuario);
         Comentario comentario = this.comentariosService.adicionaComentario(novo);
-        return new ResponseEntity<Comentario>(this.comentariosService.comentarioComentario(principal, comentario), HttpStatus.OK); 
+        return new ResponseEntity<Comentario>(this.comentariosService.comentarioComentario(principal, comentario), HttpStatus.CREATED); 
     }
 
     @DeleteMapping("/apagarComentario/{id}")
-    public ResponseEntity<Comentario> removerComentarioCampanha(@PathVariable Long id,@RequestHeader("Authorization") String header) throws ServletException{
-        String email = this.jwtService.getSujeitoDoToken(header);
+    public ResponseEntity<Comentario> removerComentarioCampanha(@PathVariable Long id,@RequestHeader("Authorization") String header){
+        String email;
+        try {
+            email = this.jwtService.getSujeitoDoToken(header);
+        } catch (ServletException e) {
+            return new ResponseEntity<Comentario>(HttpStatus.UNAUTHORIZED);
+        }
         Optional<Comentario> comentario = this.comentariosService.getComentario(id);
         String emailDono = comentario.get().getUsuario().getEmail();
         if(email.equals(emailDono)){
             return new ResponseEntity<Comentario>(this.comentariosService.removeComentario(comentario.get()),HttpStatus.OK);
         }
-        return new ResponseEntity<Comentario>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<Comentario>(HttpStatus.UNAUTHORIZED);
     }
 }

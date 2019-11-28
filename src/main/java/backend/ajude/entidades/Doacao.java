@@ -11,7 +11,9 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
+/**
+ * Entidade Doacao
+ */
 @Entity
 public class Doacao{
     @Id

@@ -5,6 +5,10 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * Objeto criado para facilitar a criacao da entidade Campanha, contendo as informacoes basicas para 
+ * criar uma Campanha
+ */
 public class CreateCampanha{
     private String nome;
     private String descricao;

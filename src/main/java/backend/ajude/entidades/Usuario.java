@@ -3,6 +3,9 @@ package backend.ajude.entidades;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * Entidade Usuario
+ */
 @Entity
 public class Usuario{
 

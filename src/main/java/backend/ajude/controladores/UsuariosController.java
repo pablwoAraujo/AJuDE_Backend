@@ -34,7 +34,7 @@ public class UsuariosController {
     @PostMapping("/api/usuarios")
     public ResponseEntity<Usuario> adicionaUsuario(@RequestBody Usuario usuario){
         try {
-            return new ResponseEntity<Usuario>(this.usuariosService.adicionaUsuario(usuario), HttpStatus.OK);
+            return new ResponseEntity<Usuario>(this.usuariosService.adicionaUsuario(usuario), HttpStatus.CREATED);
         } catch (ServletException e) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

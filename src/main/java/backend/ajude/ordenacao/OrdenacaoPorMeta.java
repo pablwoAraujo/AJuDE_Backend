@@ -2,6 +2,9 @@ package backend.ajude.ordenacao;
 
 import backend.ajude.entidades.Campanha;
 
+/**
+ * Classe criada para facilitar a ordenacao das campanhas a partir de quanto falta para atingir a meta
+ */
 public class OrdenacaoPorMeta implements Comparadores{
 
     @Override

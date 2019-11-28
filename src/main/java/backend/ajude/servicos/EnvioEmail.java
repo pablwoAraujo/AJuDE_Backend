@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import backend.ajude.entidades.Usuario;
 
+/**
+ * Servico de Email
+ */
 @Service
 public class EnvioEmail {
 
@@ -18,12 +21,17 @@ public class EnvioEmail {
         this.javaMailSender = javaMailSender;
     }
 
+    /**
+     * Envia o email de notificacao ao registrar um Usuario
+     * @param usuario o Usuario Registrado
+     * @throws MailException caso o Email nao seja valido
+     */
     public void sendNotification(Usuario usuario) throws MailException{
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(usuario.getEmail());
         mail.setFrom("pablwopsoft@gmail.com");
-        mail.setSubject("SEJA BEM VINDO AO AJUDE!");
-        mail.setText("VOCÊ PODE ACESSAR NOSSA PAGINA PELO LINK https://eager-curran-593cc1.netlify.com/#/home");
+        mail.setSubject("Cadastro Confirmado!");
+        mail.setText("Seja bem vindo(a) ao AjUdE! Seu cadastro foi realizado, você pode acessar nossa pagina a partir do link: https://eager-curran-593cc1.netlify.com/#/home");
 
         javaMailSender.send(mail);
     }

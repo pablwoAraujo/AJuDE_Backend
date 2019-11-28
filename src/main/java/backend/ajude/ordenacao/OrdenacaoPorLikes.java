@@ -2,6 +2,9 @@ package backend.ajude.ordenacao;
 
 import backend.ajude.entidades.Campanha;
 
+/**
+ * Classe criada para facilitar a ordenacao das campanhas a partir da quantidade de likes
+ */
 public class OrdenacaoPorLikes implements Comparadores{
 
     @Override

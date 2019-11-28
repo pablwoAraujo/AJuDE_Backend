@@ -9,7 +9,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.GenericFilterBean;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -19,6 +18,9 @@ import io.jsonwebtoken.PrematureJwtException;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
+/**
+ * Classe criada para filtrar as requisicoes que precisam da autenticacao
+ */
 public class TokenFilter extends GenericFilterBean {
     public final static int TOKEN_INDEX = 7;
 

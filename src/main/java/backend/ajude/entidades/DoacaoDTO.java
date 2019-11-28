@@ -5,6 +5,10 @@ import java.util.Date;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * Objeto criado para facilitar a criacao da entidade Doacao, contendo as informacoes basicas para 
+ * criar uma Doacao
+ */
 public class DoacaoDTO {
     private float valor;
     private int idCampanha;

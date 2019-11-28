@@ -6,7 +6,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+/**
+ * Entidade Like
+ */
 @Entity
 @Table(name = "CURTIDA")
 public class Like{

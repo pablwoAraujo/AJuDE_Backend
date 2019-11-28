@@ -39,17 +39,22 @@ public class DoacaoController {
     }
 
     @PostMapping("/doacao")
-    public ResponseEntity<Campanha> doar(@RequestBody DoacaoDTO doacaoDTO, @RequestHeader("Authorization") String header) throws ServletException {
-        String email = this.jwtService.getSujeitoDoToken(header);
+    public ResponseEntity<Campanha> doar(@RequestBody DoacaoDTO doacaoDTO, @RequestHeader("Authorization") String header) {
+        String email;
+        try {
+            email = this.jwtService.getSujeitoDoToken(header);
+        } catch (ServletException e) {
+            return new ResponseEntity<Campanha>(HttpStatus.UNAUTHORIZED);
+        }
         Usuario usuario = usuarioService.getUsuario(email).get();
         Campanha campanha = this.campanhasService.getCampanha(doacaoDTO.getIdCampanha()).get();
         Doacao doacao = this.doacaoService.parseDoacao(doacaoDTO, usuario, campanha);
         this.doacaoService.salvarDoacao(doacao);
-        return new ResponseEntity<Campanha>(this.campanhasService.doar(campanha, doacao), HttpStatus.OK);
+        return new ResponseEntity<Campanha>(this.campanhasService.doar(campanha, doacao), HttpStatus.CREATED);
     }
 
     @GetMapping("/doacao/campanha/{id}")
-    public ResponseEntity<List<Doacao>> doacoesDaCampanha(@PathVariable long id) throws ServletException {
+    public ResponseEntity<List<Doacao>> doacoesDaCampanha(@PathVariable long id){
         Optional<Campanha> campanha = this.campanhasService.getCampanha(id);
         if(campanha.isPresent()){
             return new ResponseEntity<List<Doacao>>(HttpStatus.BAD_REQUEST);
@@ -58,7 +63,7 @@ public class DoacaoController {
     }
 
     @GetMapping("/doacao/usuario/{email}")
-    public ResponseEntity<List<Doacao>> doacoesDoUsuario(@PathVariable String email) throws ServletException {
+    public ResponseEntity<List<Doacao>> doacoesDoUsuario(@PathVariable String email){
         Optional<Usuario> usuario = this.usuarioService.getUsuario(email);
         if(usuario.isPresent()){
             return new ResponseEntity<List<Doacao>>(HttpStatus.BAD_REQUEST);

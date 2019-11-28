@@ -34,12 +34,17 @@ public class LikeControll {
     }
 
     @GetMapping("/like/{id}")
-    public ResponseEntity<Campanha> darLike(@PathVariable Long id, @RequestHeader("Authorization") String header) throws ServletException {
-        String email = this.jwtService.getSujeitoDoToken(header);
+    public ResponseEntity<Campanha> darLike(@PathVariable Long id, @RequestHeader("Authorization") String header) {
+        String email;
+        try {
+            email = this.jwtService.getSujeitoDoToken(header);
+        } catch (ServletException e) {
+            return new ResponseEntity<Campanha>(HttpStatus.UNAUTHORIZED);
+
+        }
         Usuario usuario = usuarioService.getUsuario(email).get();
         Like like = new Like(usuario);
         Campanha campanha = this.campanhasService.getCampanha(id).get();
-        // return new ResponseEntity<Campanha>(campanha, HttpStatus.OK);
         return new ResponseEntity<Campanha>(this.campanhasService.like(campanha, like), HttpStatus.OK);
     }
 }

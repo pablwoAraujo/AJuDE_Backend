@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import backend.ajude.entidades.Comentario;
 
+/**
+ * Repositorio de Comentarios
+ */
 @Repository
 public interface ComentariosRepository<T, ID extends Serializable> extends JpaRepository<Comentario, Long> {
 

@@ -14,6 +14,9 @@ import javax.persistence.TemporalType;
 
 import backend.ajude.Enum.StatusCampanha;
 
+/**
+ * Entidade Campanha
+ */
 @Entity
 public class Campanha {
     @Id
@@ -73,16 +76,33 @@ public class Campanha {
         this.doacoes = new ArrayList<>();
     }
 
+    /**
+     * Metodo resposavel por adicionar comentarios na campanha
+     * 
+     * @param comentario o comentario a ser adicionado
+     * @return List<Comentario> a lista dos comentarios da campanha
+     */
     public List<Comentario> adcionaComentario(Comentario comentario){
         hashcomentarios.add(comentario);
         return this.hashcomentarios;
     }
 
+    /**
+     * Metodo resposavel por adicionar doacoes na campanha
+     * 
+     * @param doacaoo a doacao a ser adicionado
+     * @return List<Doacao> a lista de doacoes da campanha
+     */
     public List<Doacao> adcionaDoacao(Doacao doacao){
         this.doacoes.add(doacao);
         return this.doacoes;
     }
 
+    /**
+     * Metodo resposavel por adicionar likes/curtidas na campanha
+     * 
+     * @param like o like/curtida a ser adicionado
+     */
 	public void adcionaLike(Like like) {
         this.likes.add(like);
 	}
