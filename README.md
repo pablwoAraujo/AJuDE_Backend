@@ -13,3 +13,5 @@ Usuário:
 Email:pablwomattheusr@gmail.com
 senha: pablwo123
 
+O tempo do token possui 20 minutos, pois julgamos ser tempo o suficiente para o usuário conseguir navergar pelas campanhas até decidir fazer uma doação ou comentar algo, entre outras funcionalidades.
+
