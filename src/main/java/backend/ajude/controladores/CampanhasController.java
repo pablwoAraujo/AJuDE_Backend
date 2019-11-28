@@ -5,6 +5,8 @@ import backend.ajude.entidades.CreateCampanha;
 import backend.ajude.servicos.CampanhasService;
 import backend.ajude.servicos.JWTService;
 import backend.ajude.servicos.UsuariosService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import java.util.Optional;
 
 import javax.servlet.ServletException;
 
+@Api(value="Controller de Campanhas")
 @RestController
 public class CampanhasController {
 
@@ -35,6 +38,7 @@ public class CampanhasController {
         this.jwtService = jwtService;
     }
 
+    @ApiOperation(value="Cadastra uma Campanha")
     @PostMapping("/api/campanhas")
     public ResponseEntity<Campanha> adicionaCampanha(@RequestBody CreateCampanha campanha) {
         this.campanhasService.verificaValidade();
@@ -52,6 +56,7 @@ public class CampanhasController {
         }  
     }
 
+    @ApiOperation(value="Encerra uma Campanha")
     @PutMapping("/api/campanhas/encerar/{id}")
     public ResponseEntity<Campanha> encerraCampanha(@PathVariable long id, @RequestHeader("Authorization") String header) {
         Optional<Campanha> campanha = campanhasService.getCampanha(id);
@@ -72,6 +77,7 @@ public class CampanhasController {
         return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
     }
 
+    @ApiOperation(value="Altera a descricao da Campanha")
     @PutMapping("/api/campanhas/setDescricao/{id}")
     public ResponseEntity<Campanha> setDescricao(@PathVariable long id,@RequestBody String descricao ,@RequestHeader("Authorization") String header) {
         Optional<Campanha> campanha = campanhasService.getCampanha(id);
@@ -92,6 +98,7 @@ public class CampanhasController {
         return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
     }
 
+    @ApiOperation(value="Retorna uma Campanha a partir da url")
     @GetMapping("/api/campanhas/{url}")
     public ResponseEntity<Campanha> pesquisaCampanha(@PathVariable String url){
         this.campanhasService.verificaValidade();
@@ -102,6 +109,7 @@ public class CampanhasController {
         return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
     }
 
+    @ApiOperation(value="Retorna uma lista de campanhas criadas pelo usuario")
     @GetMapping("/api/campanhas/usuario/{email}")
     public ResponseEntity<List<Campanha>> pesquisaPorUsuario(@PathVariable String email){
         this.campanhasService.verificaValidade();
@@ -112,6 +120,7 @@ public class CampanhasController {
         return new ResponseEntity<List<Campanha>>(HttpStatus.NOT_FOUND);
     }
     
+    @ApiOperation(value="Retorna uma lista de campanhas a partir de um substring")
     @GetMapping("/api/campanhas/pesquisar/{nome}")
     public ResponseEntity<List<Campanha>> pesquisaPorNome(@PathVariable String nome){
         this.campanhasService.verificaValidade();
@@ -122,6 +131,7 @@ public class CampanhasController {
         return new ResponseEntity<List<Campanha>>(HttpStatus.NOT_FOUND);
     }
 
+    @ApiOperation(value="Retorna a lista de campanhas ordenadas por um atributo")
     @GetMapping("/api/ordena/{atributo}")
     public ResponseEntity<List<Campanha>> ordenaCampanhas(@PathVariable String atributo){
         this.campanhasService.verificaValidade();

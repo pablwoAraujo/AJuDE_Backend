@@ -22,7 +22,10 @@ import backend.ajude.servicos.CampanhasService;
 import backend.ajude.servicos.DoacoesService;
 import backend.ajude.servicos.JWTService;
 import backend.ajude.servicos.UsuariosService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value="Controller de Doações")
 @RestController
 public class DoacaoController {
     private JWTService jwtService;
@@ -38,6 +41,7 @@ public class DoacaoController {
         this.campanhasService = campanhasService;
     }
 
+    @ApiOperation(value="Salva uma Doacao")
     @PostMapping("/doacao")
     public ResponseEntity<Campanha> doar(@RequestBody DoacaoDTO doacaoDTO, @RequestHeader("Authorization") String header) {
         String email;
@@ -53,6 +57,7 @@ public class DoacaoController {
         return new ResponseEntity<Campanha>(this.campanhasService.doar(campanha, doacao), HttpStatus.CREATED);
     }
 
+    @ApiOperation(value="Retorna as doacoes de uma Campanha")
     @GetMapping("/doacao/campanha/{id}")
     public ResponseEntity<List<Doacao>> doacoesDaCampanha(@PathVariable long id){
         Optional<Campanha> campanha = this.campanhasService.getCampanha(id);
@@ -62,6 +67,7 @@ public class DoacaoController {
         return new ResponseEntity<List<Doacao>>(campanha.get().getDoacoes(), HttpStatus.OK);
     }
 
+    @ApiOperation(value="Retorna as doacoes de um Usuario")
     @GetMapping("/doacao/usuario/{email}")
     public ResponseEntity<List<Doacao>> doacoesDoUsuario(@PathVariable String email){
         Optional<Usuario> usuario = this.usuarioService.getUsuario(email);

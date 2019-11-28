@@ -16,7 +16,10 @@ import backend.ajude.servicos.CampanhasService;
 import backend.ajude.servicos.JWTService;
 import backend.ajude.servicos.LikeService;
 import backend.ajude.servicos.UsuariosService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value="Controller de Likes")
 @RestController
 public class LikeControll {
 
@@ -33,6 +36,7 @@ public class LikeControll {
         this.campanhasService = campanhasService;
     }
 
+    @ApiOperation(value="Salva/Retira um like")
     @GetMapping("/like/{id}")
     public ResponseEntity<Campanha> darLike(@PathVariable Long id, @RequestHeader("Authorization") String header) {
         String email;

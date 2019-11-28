@@ -13,7 +13,10 @@ import backend.ajude.entidades.AuthUsuario;
 import backend.ajude.entidades.Usuario;
 import backend.ajude.servicos.JWTService;
 import backend.ajude.servicos.UsuariosService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value="Controller de Autenticacao")
 @RestController
 @RequestMapping("/auth")
 public class LoginController {
@@ -27,6 +30,7 @@ public class LoginController {
 		this.jwtService = jwtService;
 	}
 
+	@ApiOperation(value="Faz a Autenticacao do Usuario")
 	@PostMapping("/login")
 	public LoginResponse authenticate(@RequestBody AuthUsuario usuario) throws ServletException {
 

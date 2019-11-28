@@ -22,7 +22,10 @@ import backend.ajude.servicos.CampanhasService;
 import backend.ajude.servicos.ComentariosService;
 import backend.ajude.servicos.JWTService;
 import backend.ajude.servicos.UsuariosService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value="Controller de Comentarios")
 @RestController
 public class ComentarioController {
     private CampanhasService campanhasService;
@@ -39,6 +42,7 @@ public class ComentarioController {
 
     }
     
+    @ApiOperation(value="Salva um Comentario na Campanha e Retorna a lista de Comentarios")
     @PostMapping("/comentaCampanha")
     public ResponseEntity<List<Comentario>> comentarioCampanha(@RequestBody ComentarioDTO parcial,@RequestHeader("Authorization") String header) {
         String email;
@@ -54,6 +58,7 @@ public class ComentarioController {
         return new ResponseEntity<List<Comentario>>(this.campanhasService.adicionaComentario(comentario, campanha), HttpStatus.CREATED);
     }
 
+    @ApiOperation(value="Salva um Comentario na reposta de um Comentario e Retorna esse Comentario")
     @PostMapping("/comentaComentario")
     public ResponseEntity<Comentario> comentarioComentario(@RequestBody ComentarioDTO parcial,@RequestHeader("Authorization") String header) {
         String email;
@@ -69,6 +74,7 @@ public class ComentarioController {
         return new ResponseEntity<Comentario>(this.comentariosService.comentarioComentario(principal, comentario), HttpStatus.CREATED); 
     }
 
+    @ApiOperation(value="Faz uma eliminação lógica de um Comentario")
     @DeleteMapping("/apagarComentario/{id}")
     public ResponseEntity<Comentario> removerComentarioCampanha(@PathVariable Long id,@RequestHeader("Authorization") String header){
         String email;
