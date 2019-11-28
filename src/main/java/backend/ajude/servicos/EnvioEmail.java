@@ -22,8 +22,8 @@ public class EnvioEmail {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(usuario.getEmail());
         mail.setFrom("pablwopsoft@gmail.com");
-        mail.setSubject("SEJA BEM VINDO!");
-        mail.setText("SEJA BEM VINDO AO AJuDE!");
+        mail.setSubject("SEJA BEM VINDO AO AJUDE!");
+        mail.setText("VOCÊ PODE ACESSAR NOSSA PAGINA PELO LINK https://eager-curran-593cc1.netlify.com/#/home");
 
         javaMailSender.send(mail);
     }

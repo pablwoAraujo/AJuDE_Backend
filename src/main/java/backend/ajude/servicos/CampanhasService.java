@@ -2,9 +2,9 @@ package backend.ajude.servicos;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 
@@ -14,6 +14,7 @@ import backend.ajude.entidades.Comentario;
 import backend.ajude.entidades.CreateCampanha;
 import backend.ajude.entidades.Doacao;
 import backend.ajude.entidades.Like;
+import backend.ajude.entidades.Usuario;
 import backend.ajude.ordenacao.OrdenacaoPorData;
 import backend.ajude.ordenacao.OrdenacaoPorLikes;
 import backend.ajude.ordenacao.OrdenacaoPorMeta;
@@ -67,7 +68,7 @@ public class CampanhasService {
         return this.campanhasDAO.findByUrl(url);
     }
 
-    public Set<Comentario> adicionaComentario(Comentario comentario, Campanha campanha) {
+    public List<Comentario> adicionaComentario(Comentario comentario, Campanha campanha) {
         Optional<Campanha> campanhaRecuperada = this.campanhasDAO.findById(campanha.getId());
         if(campanhaRecuperada.isPresent()){
             campanha.adcionaComentario(comentario);
@@ -78,7 +79,7 @@ public class CampanhasService {
 	}
 
 	public Campanha like(Campanha campanha, Like like) {
-        Set<Like> likes = campanha.getLikes();
+        List<Like> likes = campanha.getLikes();
         for (Like c: likes){
             if(c.getUser().equals(like.getUser())){
                 likes.remove(c);
@@ -95,9 +96,18 @@ public class CampanhasService {
 	public List<Campanha> pesquisaPorUsuario(String email) {
         List<Campanha> campanhas = campanhasDAO.findAll();
         List<Campanha> saida = new ArrayList<Campanha>();
-        for (int i = 0; i < campanhas.size(); i++) {
-            if (campanhas.get(i).getDono().getEmail().toLowerCase().contains(email.toLowerCase())) {
-                saida.add(campanhas.get(i));
+        for(Campanha campanha: campanhas){
+            if (campanha.getDono().getEmail().toLowerCase().equals(email.toLowerCase())) {
+                saida.add(campanha);
+            }
+        }
+        for(Campanha campanha: campanhas){
+            for(Doacao doacao: campanha.getDoacoes()){
+                if (doacao.getUsuario().getEmail().toLowerCase().equals(email.toLowerCase())) {
+                    if(!saida.contains(campanha)){
+                        saida.add(campanha);
+                    }
+                }
             }
         }
         return saida;
@@ -131,12 +141,52 @@ public class CampanhasService {
         for(Campanha campanha: lista){
             if (contador<5){
                 if(campanha.getStatus().equals(StatusCampanha.ATIVA)){
-                    listaOrdenada.add(campanha);
-                    contador++;
+                    if(atributo.equals("meta")){
+                        if(campanha.getMeta() - campanha.getDoacao()>0){
+                            listaOrdenada.add(campanha);
+                            contador++;
+                        }
+                    }else{
+                        listaOrdenada.add(campanha);
+                        contador++;
+                    }
                 }
             }
         }
         return listaOrdenada;	
     }
 
+	public Campanha setDescricao(Campanha campanha, String descricao) {
+        campanha.setDescricao(descricao);
+		return this.campanhasDAO.save(campanha);
+	}
+
+    public void verificaValidade(){
+        Date dataAtual = new Date();
+        List<Campanha> lista = this.campanhasDAO.findAll();
+        for(Campanha campanha: lista){
+            if(dataAtual.compareTo(campanha.getData())> 0){
+                if(campanha.getMeta()- campanha.getDoacao()>0){
+                    campanha.setStatus(StatusCampanha.VENCIDA);
+                }else{
+                    campanha.setStatus(StatusCampanha.CONCLUIDA);
+                }
+                this.campanhasDAO.save(campanha);
+            }
+        }
+
+    }
+
+	public List<Doacao> doacoesDoUsuario(Usuario usuario) {
+        List<Campanha> campanhas = this.campanhasDAO.findAll();
+        List<Doacao> doacoes = new ArrayList<>();
+        for(Campanha campanha: campanhas){
+            for(Doacao doacao: campanha.getDoacoes()){
+                if(doacao.getUsuario().equals(usuario)){
+                    doacoes.add(doacao);
+                }
+            }
+        }
+		return doacoes;
+	}
 }

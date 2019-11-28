@@ -36,7 +36,7 @@ public class ComentariosService {
     }
 
     public Comentario transformaComentarioCampanha(ComentarioDTO parcial, Campanha campanha, Usuario usuario){
-        Comentario comentario = new Comentario(parcial.getComentario(), usuario, campanha, true);
+        Comentario comentario = new Comentario(parcial.getComentario(), usuario, campanha, true, parcial.getData());
         return comentario;
     }
 

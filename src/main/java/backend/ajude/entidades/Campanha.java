@@ -1,8 +1,8 @@
 package backend.ajude.entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,13 +28,13 @@ public class Campanha {
     private double meta;
     private double doacao;
     @OneToMany
-    private Set<Doacao> doacoes;
+    private List<Doacao> doacoes;
     @OneToMany
-    private Set<Comentario> hashcomentarios;
+    private List<Comentario> hashcomentarios;
     @ManyToOne
     private Usuario dono;
     @OneToMany
-    private Set<Like> likes;
+    private List<Like> likes;
 
     public Campanha() {
         super();
@@ -52,9 +52,9 @@ public class Campanha {
         this.meta = meta;
         this.doacao = doacao;
         this.dono = dono;
-        this.likes =  new HashSet<>();
-        this.hashcomentarios = new HashSet<>();
-        this.doacoes = new HashSet<>();
+        this.likes =  new ArrayList<>();
+        this.hashcomentarios = new ArrayList<>();
+        this.doacoes = new ArrayList<>();
     }
 
     public Campanha(String nome, String url, String descricao, Date data, StatusCampanha status, double meta,
@@ -68,17 +68,17 @@ public class Campanha {
         this.meta = meta;
         this.doacao = doacao;
         this.dono = dono;
-        this.likes =  new HashSet<>();
-        this.hashcomentarios = new HashSet<>();
-        this.doacoes = new HashSet<>();
+        this.likes =  new ArrayList<>();
+        this.hashcomentarios = new ArrayList<>();
+        this.doacoes = new ArrayList<>();
     }
 
-    public Set<Comentario> adcionaComentario(Comentario comentario){
+    public List<Comentario> adcionaComentario(Comentario comentario){
         hashcomentarios.add(comentario);
         return this.hashcomentarios;
     }
 
-    public Set<Doacao> adcionaDoacao(Doacao doacao){
+    public List<Doacao> adcionaDoacao(Doacao doacao){
         this.doacoes.add(doacao);
         return this.doacoes;
     }
@@ -151,19 +151,19 @@ public class Campanha {
         this.doacao = doacao;
     }
 
-    public Set<Doacao> getDoacoes() {
+    public List<Doacao> getDoacoes() {
         return doacoes;
     }
 
-    public void setDoacoes(Set<Doacao> doacoes) {
+    public void setDoacoes(List<Doacao> doacoes) {
         this.doacoes = doacoes;
     }
 
-    public Set<Comentario> getHashcomentarios() {
+    public List<Comentario> getHashcomentarios() {
         return hashcomentarios;
     }
 
-    public void setHashcomentarios(Set<Comentario> hashcomentarios) {
+    public void setHashcomentarios(List<Comentario> hashcomentarios) {
         this.hashcomentarios = hashcomentarios;
     }
 
@@ -175,12 +175,13 @@ public class Campanha {
         this.dono = dono;
     }
 
-    public Set<Like> getLikes() {
+    public List<Like> getLikes() {
         return likes;
     }
 
-    public void setLikes(Set<Like> likes) {
+    public void setLikes(List<Like> likes) {
         this.likes = likes;
     }
 
+ 
 }

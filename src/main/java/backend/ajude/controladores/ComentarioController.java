@@ -1,7 +1,7 @@
 package backend.ajude.controladores;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 
@@ -40,15 +40,13 @@ public class ComentarioController {
     }
     
     @PostMapping("/comentaCampanha")
-    public ResponseEntity<Set<Comentario>> comentarioCampanha(@RequestBody ComentarioDTO parcial,@RequestHeader("Authorization") String header) throws ServletException {
+    public ResponseEntity<List<Comentario>> comentarioCampanha(@RequestBody ComentarioDTO parcial,@RequestHeader("Authorization") String header) throws ServletException {
         String email = this.jwtService.getSujeitoDoToken(header);
         Usuario usuario = this.servicoUsuarios.getUsuario(email).get();
-        //return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
         Campanha campanha = this.campanhasService.getCampanha(parcial.getIdCampanha()).get();
-        //return new ResponseEntity<Campanha>(campanha, HttpStatus.OK);
         Comentario comentario = this.comentariosService.transformaComentarioCampanha(parcial, campanha, usuario);
         this.comentariosService.adicionaComentario(comentario);
-        return new ResponseEntity<Set<Comentario>>(this.campanhasService.adicionaComentario(comentario, campanha), HttpStatus.OK);
+        return new ResponseEntity<List<Comentario>>(this.campanhasService.adicionaComentario(comentario, campanha), HttpStatus.OK);
     }
 
     @PostMapping("/comentaComentario")

@@ -10,14 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,13 +23,14 @@ import java.util.Optional;
 
 import javax.servlet.ServletException;
 
-@RequestMapping("/api/campanhas")
 @RestController
 public class CampanhasController {
 
+    @Autowired
     private CampanhasService campanhasService;
     @Autowired
     private UsuariosService servicoUsuarios;
+    @Autowired
     private JWTService jwtService;
 
     public CampanhasController(CampanhasService campanhasService, UsuariosService servicoUsuario, JWTService jwtService){
@@ -41,14 +40,15 @@ public class CampanhasController {
         this.jwtService = jwtService;
     }
 
-    @PostMapping
+    @PostMapping("/api/campanhas")
     public ResponseEntity<Campanha> adicionaCampanha(@RequestBody CreateCampanha campanha) throws ServletException {
+        this.campanhasService.verificaValidade();
         Campanha campanhaFinal = this.campanhasService.transformaCampanha(campanha);
         campanhaFinal.setDono(this.servicoUsuarios.getUsuario(campanha.getEmail()).get());
         return new ResponseEntity<Campanha>(this.campanhasService.adicionaCampanha(campanhaFinal), HttpStatus.OK);
     }
 
-    @PutMapping("/encerar/{id}")
+    @PutMapping("/api/campanhas/encerar/{id}")
     public ResponseEntity<Campanha> encerraCampanha(@PathVariable long id, @RequestHeader("Authorization") String header) throws ServletException {
         Optional<Campanha> campanha = campanhasService.getCampanha(id);
         String email = this.jwtService.getSujeitoDoToken(header);
@@ -63,8 +63,24 @@ public class CampanhasController {
         return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/{url}")
+    @PutMapping("/api/campanhas/setDescricao/{id}")
+    public ResponseEntity<Campanha> setDescricao(@PathVariable long id,@RequestBody String descricao ,@RequestHeader("Authorization") String header) throws ServletException {
+        Optional<Campanha> campanha = campanhasService.getCampanha(id);
+        String email = this.jwtService.getSujeitoDoToken(header);
+        if(campanha.isPresent()){            
+            if(email.equals(campanha.get().getDono().getEmail())){
+                Campanha reposta = this.campanhasService.setDescricao(campanha.get(), descricao);
+                return new ResponseEntity<Campanha>(reposta, HttpStatus.OK);
+            }else{
+                return new ResponseEntity<Campanha>(HttpStatus.UNAUTHORIZED);
+            }
+        }
+        return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/api/campanhas/{url}")
     public ResponseEntity<Campanha> pesquisaCampanha(@PathVariable String url){
+        this.campanhasService.verificaValidade();
         Optional<Campanha> campanha = campanhasService.pesquisaCampanha(url);
         if(campanha.isPresent()){
             return new ResponseEntity<Campanha>(campanha.get(), HttpStatus.OK);
@@ -72,9 +88,9 @@ public class CampanhasController {
         return new ResponseEntity<Campanha>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("usuario/{email}")
+    @GetMapping("/api/campanhas/usuario/{email}")
     public ResponseEntity<List<Campanha>> pesquisaPorUsuario(@PathVariable String email){
-        // Usuario usuario = this.servicoUsuarios.getUsuario(email).get();
+        this.campanhasService.verificaValidade();
         List<Campanha> campanha = campanhasService.pesquisaPorUsuario(email);
         if(!campanha.isEmpty()){
             return new ResponseEntity<List<Campanha>>(campanha, HttpStatus.OK);
@@ -82,8 +98,9 @@ public class CampanhasController {
         return new ResponseEntity<List<Campanha>>(HttpStatus.NOT_FOUND);
     }
     
-    @GetMapping("pesquisar/{nome}")
+    @GetMapping("/api/campanhas/pesquisar/{nome}")
     public ResponseEntity<List<Campanha>> pesquisaPorNome(@PathVariable String nome){
+        this.campanhasService.verificaValidade();
         List<Campanha> campanha = campanhasService.pesquisaPorNome(nome);
         if(!campanha.isEmpty()){
             return new ResponseEntity<List<Campanha>>(campanha, HttpStatus.OK);
@@ -91,8 +108,9 @@ public class CampanhasController {
         return new ResponseEntity<List<Campanha>>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("ordena/{atributo}")
+    @GetMapping("/api/ordena/{atributo}")
     public ResponseEntity<List<Campanha>> ordenaCampanhas(@PathVariable String atributo){
+        this.campanhasService.verificaValidade();
         return new ResponseEntity<List<Campanha>>(this.campanhasService.ordenaCampanhas(atributo), HttpStatus.OK);
     }
 }
