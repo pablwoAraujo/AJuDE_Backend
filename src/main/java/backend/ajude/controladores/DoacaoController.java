@@ -51,7 +51,7 @@ public class DoacaoController {
     @GetMapping("/doacao/campanha/{id}")
     public ResponseEntity<List<Doacao>> doacoesDaCampanha(@PathVariable long id) throws ServletException {
         Optional<Campanha> campanha = this.campanhasService.getCampanha(id);
-        if(campanha.isEmpty()){
+        if(campanha.isPresent()){
             return new ResponseEntity<List<Doacao>>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<List<Doacao>>(campanha.get().getDoacoes(), HttpStatus.OK);
@@ -60,7 +60,7 @@ public class DoacaoController {
     @GetMapping("/doacao/usuario/{email}")
     public ResponseEntity<List<Doacao>> doacoesDoUsuario(@PathVariable String email) throws ServletException {
         Optional<Usuario> usuario = this.usuarioService.getUsuario(email);
-        if(usuario.isEmpty()){
+        if(usuario.isPresent()){
             return new ResponseEntity<List<Doacao>>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<List<Doacao>>(this.campanhasService.doacoesDoUsuario(usuario.get()), HttpStatus.OK);
