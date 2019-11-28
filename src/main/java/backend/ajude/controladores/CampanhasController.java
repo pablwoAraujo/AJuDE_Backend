@@ -88,7 +88,7 @@ public class CampanhasController {
     public ResponseEntity<List<Campanha>> pesquisaPorUsuario(@PathVariable String email){
         this.campanhasService.verificaValidade();
         List<Campanha> campanha = campanhasService.pesquisaPorUsuario(email);
-        if(campanha.isEmpty()){
+        if(!campanha.isEmpty()){
             return new ResponseEntity<List<Campanha>>(campanha, HttpStatus.OK);
         }
         return new ResponseEntity<List<Campanha>>(HttpStatus.NOT_FOUND);
