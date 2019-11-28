@@ -6,8 +6,6 @@ import backend.ajude.servicos.CampanhasService;
 import backend.ajude.servicos.JWTService;
 import backend.ajude.servicos.UsuariosService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +21,12 @@ import java.util.Optional;
 
 import javax.servlet.ServletException;
 
+
 @RestController
 public class CampanhasController {
 
-    @Autowired
     private CampanhasService campanhasService;
-    @Autowired
     private UsuariosService servicoUsuarios;
-    @Autowired
     private JWTService jwtService;
 
     public CampanhasController(CampanhasService campanhasService, UsuariosService servicoUsuario, JWTService jwtService){
