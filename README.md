@@ -9,9 +9,4 @@ Links da aplicação operacional implantada e integrada com backend também oper
 .frontend: https://eager-curran-593cc1.netlify.com/#/home 
 .backend: https://teste31102001.herokuapp.com/
 
-Usuário: 
-Email:pablwomattheusr@gmail.com
-senha: pablwo123
-
-O tempo do token possui 20 minutos, pois julgamos ser tempo o suficiente para o usuário conseguir navergar pelas campanhas até decidir fazer uma doação ou comentar algo, entre outras funcionalidades.
-
+A duração do token é de 20 minutos, pois julgamos ser tempo o suficiente para o usuário conseguir navergar pelas campanhas até decidir fazer uma doação ou comentar algo, entre outras funcionalidades.
